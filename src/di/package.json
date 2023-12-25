@@ -1,0 +1,23 @@
+{
+  "name": "@zcodeapp/di",
+  "version": "0.0.1",
+  "description": "Dependency Injection",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:zcodeapp/msexpandable.git"
+  },
+  "keywords": [
+    "dependency",
+    "injection"
+  ],
+  "author": "Joao Moraes <joaomoraesbr@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zcodeapp/msexpandable/issues"
+  },
+  "homepage": "https://github.com/zcodeapp/msexpandable#readme"
+}

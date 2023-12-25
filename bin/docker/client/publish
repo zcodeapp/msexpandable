@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source bin/docker/generic
+
+sign_server github.com
+npx lerna publish

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+docker compose build --build-arg NPM_TOKEN=$NPM_TOKEN --build-arg USERID=$UID client
+RESULT=$(docker compose run --rm --entrypoint /bin/bash client -c "echo \"Success\"")
+if [ "$RESULT" = "Success" ]; then
+    echo "Docker Compose Build success"
+else
+    echo "Docker Compose Build Error"
+    exit 1
+fi

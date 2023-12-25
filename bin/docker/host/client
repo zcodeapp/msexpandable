@@ -1,0 +1,4 @@
+#!/bin/bash
+
+bin/docker/host/install
+bin/docker/host/docker-run

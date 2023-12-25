@@ -1,0 +1,10 @@
+services:
+  client:
+    image: zcodeapp/nodejs
+    build:
+      context: .
+      dockerfile: docker/nodejs/Dockerfile
+    command: /bin/bash
+    volumes:
+      - ~/.ssh:/home/node/.ssh
+      - ${PWD}:/app

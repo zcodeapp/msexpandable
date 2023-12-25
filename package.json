@@ -1,0 +1,28 @@
+{
+  "name": "msexpandable",
+  "version": "0.0.0",
+  "description": "Microservice Expandable",
+  "workspaces": [
+    "src/*"
+  ],
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:zcodeapp/msexpandable.git"
+  },
+  "keywords": [
+    "microservice",
+    "expandable"
+  ],
+  "author": "Joao Moraes <joaomoraesbr@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zcodeapp/msexpandable/issues"
+  },
+  "homepage": "https://github.com/zcodeapp/msexpandable#readme",
+  "dependencies": {
+    "lerna": "^8.0.1"
+  }
+}

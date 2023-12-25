@@ -1,0 +1,19 @@
+#!/bin/bash
+
+source bin/docker/generic
+
+is_debian_based() {
+    local os_id=$(read_os_release_property "ID")
+    local os_id_like=$(read_os_release_property "ID_LIKE")
+
+    if [ "$os_id" = "debian" ] || [[ "$os_id_like" =~ debian ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+if ! is_debian_based; then
+    echo "Needs Debian based so"
+    exit 1;
+fi

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+read_os_release_property() {
+    local property="$1"
+    local value=$(grep "^${property}=" /etc/os-release | cut -d'=' -f2- | tr -d '"')
+    echo "$value"
+}
+
+sign_server() {
+    mkdir -p ~/.ssh
+    touch ~/.ssh/known_hosts
+    if ! ssh-keygen -F "$1" > /dev/null; then
+        ssh-keyscan $1 >> ~/.ssh/known_hosts
+    fi
+}
