@@ -1,6 +1,6 @@
 {
-  "name": "@zcodeapp/di",
-  "version": "0.0.7",
+  "name": "@zcode.app/di",
+  "version": "0.0.0",
   "description": "Dependency Injection",
   "main": "dist/index.js",
   "publishConfig": {
