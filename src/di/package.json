@@ -3,6 +3,7 @@
   "version": "0.0.4",
   "description": "Dependency Injection",
   "main": "dist/index.js",
+  "private": false,
   "scripts": {
     "test": "jest"
   },
@@ -20,5 +21,5 @@
     "url": "https://github.com/zcodeapp/msexpandable/issues"
   },
   "homepage": "https://github.com/zcodeapp/msexpandable#readme",
-  "gitHead": "00083c8d974bb40843a63736a48700738deef235"
+  "gitHead": "07657f8d672f7202db82bca1d1dafde824ba962d"
 }
