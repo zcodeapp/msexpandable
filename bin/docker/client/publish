@@ -3,4 +3,6 @@
 source bin/docker/generic
 
 sign_server github.com
+git config --global user.email "joaomoraesbr@gmail.com"
+git config --global user.name "Joao Moraes"
 npx lerna publish
