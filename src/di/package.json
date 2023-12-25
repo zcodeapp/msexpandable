@@ -1,9 +1,11 @@
 {
   "name": "@zcodeapp/di",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Dependency Injection",
   "main": "dist/index.js",
-  "publishConfig": {"access": "public"},
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "jest"
   },
