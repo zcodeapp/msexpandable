@@ -8,3 +8,23 @@ services:
     volumes:
       - ~/.ssh:/home/node/.ssh
       - ${PWD}:/app
+  build:
+    image: zcodeapp/nodejs
+    build:
+      context: .
+      dockerfile: docker/nodejs/Dockerfile
+    entrypoint: /usr/local/bin/node
+    command: run build
+    volumes:
+      - ~/.ssh:/home/node/.ssh
+      - ${PWD}:/app
+  server:
+    image: zcodeapp/nodejs
+    build:
+      context: .
+      dockerfile: docker/nodejs/Dockerfile
+    entrypoint: /usr/local/bin/node
+    command: run server
+    volumes:
+      - ~/.ssh:/home/node/.ssh
+      - ${PWD}:/app

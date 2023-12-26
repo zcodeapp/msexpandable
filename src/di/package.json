@@ -1,13 +1,15 @@
 {
-  "name": "@zcode.app/di",
-  "version": "0.0.8",
+  "name": "@zcodeapp-packages/di",
+  "version": "0.0.7",
   "description": "Dependency Injection",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -23,5 +25,8 @@
     "url": "https://github.com/zcodeapp/msexpandable/issues"
   },
   "homepage": "https://github.com/zcodeapp/msexpandable#readme",
-  "gitHead": "93057201c54b28188e1cbc32ee9a198a9e75cf4e"
+  "gitHead": "93057201c54b28188e1cbc32ee9a198a9e75cf4e",
+  "dependencies": {
+    "@zcodeapp-packages/interfaces": "^0.0.1"
+  }
 }

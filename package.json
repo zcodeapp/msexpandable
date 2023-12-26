@@ -6,7 +6,8 @@
     "src/*"
   ],
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "lerna run build"
   },
   "repository": {
     "type": "git",
