@@ -22,5 +22,6 @@
   "bugs": {
     "url": "https://github.com/zcodeapp/msexpandable/issues"
   },
-  "homepage": "https://github.com/zcodeapp/msexpandable#readme"
+  "homepage": "https://github.com/zcodeapp/msexpandable#readme",
+  "gitHead": "930858ba01594b087e836e3a5b06787250c62b37"
 }

@@ -25,7 +25,7 @@
     "url": "https://github.com/zcodeapp/msexpandable/issues"
   },
   "homepage": "https://github.com/zcodeapp/msexpandable#readme",
-  "gitHead": "93057201c54b28188e1cbc32ee9a198a9e75cf4e",
+  "gitHead": "930858ba01594b087e836e3a5b06787250c62b37",
   "dependencies": {
     "@zcodeapp-packages/interfaces": "^0.0.2"
   }
