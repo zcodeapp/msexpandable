@@ -1,27 +1,26 @@
 {
-    "name": "@zcodeapp-packages/interfaces",
-    "version": "0.0.1",
-    "description": "Interfaces for packages",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "scripts": {
-      "build": "tsc"
-    },
-    "publishConfig": {
-      "access": "public"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git+git@github.com:zcodeapp/msexpandable.git"
-    },
-    "keywords": [
-      "interfaces"
-    ],
-    "author": "Joao Moraes <joaomoraesbr@gmail.com>",
-    "license": "ISC",
-    "bugs": {
-      "url": "https://github.com/zcodeapp/msexpandable/issues"
-    },
-    "homepage": "https://github.com/zcodeapp/msexpandable#readme"
-  }
-  
+  "name": "@zcodeapp-packages/interfaces",
+  "version": "0.0.2",
+  "description": "Interfaces for packages",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:zcodeapp/msexpandable.git"
+  },
+  "keywords": [
+    "interfaces"
+  ],
+  "author": "Joao Moraes <joaomoraesbr@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zcodeapp/msexpandable/issues"
+  },
+  "homepage": "https://github.com/zcodeapp/msexpandable#readme"
+}

@@ -1,6 +1,6 @@
 {
   "name": "@zcodeapp-packages/di",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Dependency Injection",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,6 +27,6 @@
   "homepage": "https://github.com/zcodeapp/msexpandable#readme",
   "gitHead": "93057201c54b28188e1cbc32ee9a198a9e75cf4e",
   "dependencies": {
-    "@zcodeapp-packages/interfaces": "^0.0.1"
+    "@zcodeapp-packages/interfaces": "^0.0.2"
   }
 }
