@@ -1,6 +1,6 @@
 {
   "name": "@zcodeapp-packages/interfaces",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Interfaces for packages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
