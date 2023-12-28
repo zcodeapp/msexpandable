@@ -1,6 +1,6 @@
 {
-  "name": "@zcodeapp-packages/di",
-  "version": "0.0.9",
+  "name": "@zcodeapp-packages/utils",
+  "version": "0.0.2",
   "description": "Dependency Injection",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,8 +16,8 @@
     "url": "git+git@github.com:zcodeapp/msexpandable.git"
   },
   "keywords": [
-    "dependency",
-    "injection"
+    "utils",
+    "random-string"
   ],
   "author": "Joao Moraes <joaomoraesbr@gmail.com>",
   "license": "ISC",
@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
-    "@zcodeapp-packages/utils": "^0.0.1",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.3.3"
@@ -39,8 +38,6 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "testMatch": [
-      "<rootDir>/tests/**/*.test.[jt]s?(x)"
-    ]
+    "testMatch": ["<rootDir>/tests/**/*.test.[jt]s?(x)"]
   }
 }

@@ -8,5 +8,14 @@
         "strict": true,
         "skipLibCheck": true,
         "lib": ["ES2015", "DOM"]
+    },
+    "editorOptions": {
+        "indent": "spaces",
+        "tabSize": 2,
+        "insertSpaces": true
+    },
+    "baseUrl": ".",
+    "paths": {
+        "@zcodeapp-packages/*": ["src"]
     }
 }

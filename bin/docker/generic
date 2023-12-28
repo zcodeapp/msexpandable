@@ -13,3 +13,10 @@ sign_server() {
         ssh-keyscan $1 >> ~/.ssh/known_hosts
     fi
 }
+
+empty_var() {
+    if [ "$1" == "" ]; then
+        echo $2;
+        exit 1;
+    fi
+}

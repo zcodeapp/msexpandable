@@ -2,6 +2,7 @@
 
 source bin/docker/generic
 
+empty_var $NPM_TOKEN "Needs NPM_TOKEN for use publish"
 sign_server github.com
 git config --global user.email "joaomoraesbr@gmail.com"
 git config --global user.name "Joao Moraes"
