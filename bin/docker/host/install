@@ -4,3 +4,4 @@ bin/docker/host/ostest
 bin/docker/host/docker-install
 bin/docker/host/docker-build
 bin/docker/host/docker-run bin/docker/client/install
+bin/docker/host/docker-run bin/docker/client/build
