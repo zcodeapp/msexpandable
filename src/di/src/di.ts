@@ -1,4 +1,4 @@
-import { IDi, TConstructor } from "@zcodeapp-packages/interfaces";
+import { IDi, TConstructor } from "@zcodeapp/interfaces";
 
 export class Di implements IDi {
   static instance: IDi;
@@ -41,7 +41,7 @@ export class Di implements IDi {
     if (instance.instance)
       return instance.instance;
 
-    if (instance.singleton) {
+    //if (instance.singleton) {
       if (typeof key == 'string')
         instance.instance = this.args(instance.args);
       else
@@ -49,12 +49,12 @@ export class Di implements IDi {
 
       this._instances.set(key, instance);
       return instance.instance;
-    }
+    //}
 
-    if (typeof key == 'string')
-      return instance.args;
+    // if (typeof key == 'string')
+    //   return instance.args;
 
-    return new key(...this.args(instance.args));
+    // return new key(...this.args(instance.args));
   }
 
   private args(args: any) {
@@ -63,20 +63,10 @@ export class Di implements IDi {
     
     for (var i in args) {
       let value;
-      switch(typeof args[i]) {
-        case 'string':
-        case 'number':
-        case 'boolean':
-        case 'function':
-          try {
-            value = this.get(args[i]);
-          } catch {
-            value = args[i];
-          }
-          break;
-        default:
-          value = this.get(args[i]);
-          break;
+      try {
+        value = this.get(args[i]);
+      } catch {
+        value = args[i];
       }
       args[i] = value
     }

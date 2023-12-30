@@ -1,12 +1,25 @@
 {
-    "extends": "../../tsconfig.base.json",
-    "compilerOptions": {
-      "outDir": "./dist"
-    },
-    "include": [
-      "src/**/*"
-    ],
-    "exclude": [
-      "tests/**/*"
-    ]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "outDir": "./dist"
+  },
+  "editorOptions": {
+      "indent": "spaces",
+      "tabSize": 2,
+      "insertSpaces": true
+  },
+  "include": [
+    "src/**/*",
+    "tests/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
 }

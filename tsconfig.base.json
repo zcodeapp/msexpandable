@@ -16,6 +16,6 @@
     },
     "baseUrl": ".",
     "paths": {
-        "@zcodeapp-packages/*": ["src"]
+        "@zcodeapp/*": ["src"]
     }
 }

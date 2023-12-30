@@ -5,9 +5,10 @@ services:
       context: .
       dockerfile: docker/nodejs/Dockerfile
     command: /bin/bash
+    user: node
     volumes:
       - ~/.ssh:/home/node/.ssh
-      - ${PWD}:/app
+      - /var/www/msexpandable:/app
   build:
     image: zcodeapp/nodejs
     build:
@@ -28,3 +29,19 @@ services:
     volumes:
       - ~/.ssh:/home/node/.ssh
       - ${PWD}:/app
+  test:
+    image: zcodeapp/nodejs
+    build:
+      context: .
+      dockerfile: docker/nodejs/Dockerfile
+    entrypoint: /usr/local/bin/npm
+    command: run test
+    user: node
+    volumes:
+      - ~/.ssh:/home/node/.ssh
+      - /var/www/msexpandable:/app
+      - /var/www/msexpandable/node_modules:/var/node_modules
+    environment:
+      - NODE_ENV=development
+    ports:
+      - 9229:9229

@@ -1,0 +1,47 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Di Debug",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "docker",
+      "localRoot": "${workspaceFolder}",
+      "attachSimplePort": 9229,
+      "remoteRoot": "/app/src/di",
+      "runtimeArgs": [
+        "compose", "-f", "../../docker-compose.yml",
+        "run", "--rm",
+        "--workdir", "/app/src/di",
+        "--publish", "9229:9229",
+        "test"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+    }
+  ]
+}
+/*
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Di Debug",
+      "type": "node",
+      "request": "attach",
+      "preLaunchTask": "docker-compose",
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/app/src/di",
+      "protocol": "inspector",
+      "restart": true,
+      "stopOnEntry": false,
+      "outFiles": ["${workspaceFolder}/dist/** /*.js"]
+    }
+  ]
+}
+*/

@@ -1,5 +1,5 @@
 {
-  "name": "msexpandable",
+  "name": "zcodeapp",
   "version": "0.0.0",
   "description": "Microservice Expandable",
   "workspaces": [
@@ -23,10 +23,7 @@
     "url": "https://github.com/zcodeapp/msexpandable/issues"
   },
   "homepage": "https://github.com/zcodeapp/msexpandable#readme",
-  "dependencies": {
-    "lerna": "^8.0.1"
-  },
   "devDependencies": {
-    "typescript": "^5.3.3"
+    "ts-node": "^10.9.2"
   }
 }

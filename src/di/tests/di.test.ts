@@ -1,5 +1,5 @@
-import { IDi } from "@zcodeapp-packages/interfaces";
-import { Utils } from "@zcodeapp-packages/utils";
+import { IDi } from "@zcodeapp/interfaces";
+import { Utils } from "@zcodeapp/utils";
 import { Di } from "../src"
 import { ExampleSimpleString } from "./mocks/ExampleSimpleString"
 import { ExampleSimpleInject } from "./mocks/ExampleSimpleInject";
@@ -60,7 +60,7 @@ describe("Di Test", () => {
 
     it("Test instance ExampleSimpleInject with non-singleton", () => {
         di.register(ExampleSimpleCallback, [() => Utils.RandomString()], false);
-        di.register(ExampleSimpleCallbackInject, [ExampleSimpleCallback], true);
+        di.register(ExampleSimpleCallbackInject, [ExampleSimpleCallback], false);
         const instance1 = di.get(ExampleSimpleCallbackInject);
         const instance2 = di.get(ExampleSimpleCallbackInject);
         const result1 = instance1.getClass().getContent();
