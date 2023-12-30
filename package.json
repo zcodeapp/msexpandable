@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/zcodeapp/msexpandable#readme",
   "devDependencies": {
+    "lerna": "^8.0.1",
     "ts-node": "^10.9.2"
   }
 }
