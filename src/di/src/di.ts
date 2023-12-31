@@ -68,10 +68,7 @@ export class Di implements IDi {
   }
 
   private args(args: any[]) {
-    // if (typeof args === 'string' || typeof args === 'function')
-      // return args;
-
-      var _args: any[] = [];
+    const _args: any[] = [];
     
     for (const i in args) {
       let value;
