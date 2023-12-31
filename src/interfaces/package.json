@@ -5,8 +5,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Interfaces only\""
+    "test": "echo \"Interfaces only\"",
+    "build": "tsc && npm run eslint",
+    "eslint": "eslint --ext .ts ."
   },
   "publishConfig": {
     "access": "public"
@@ -26,6 +27,9 @@
   "homepage": "https://github.com/zcodeapp/msexpandable#readme",
   "gitHead": "930858ba01594b087e836e3a5b06787250c62b37",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.16.0",
+    "eslint": "^8.56.0",
     "typescript": "^5.3.3"
   }
 }

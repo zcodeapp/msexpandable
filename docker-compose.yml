@@ -8,27 +8,9 @@ services:
     user: node
     volumes:
       - ~/.ssh:/home/node/.ssh
-      - /var/www/msexpandable:/app
-  build:
-    image: zcodeapp/nodejs
-    build:
-      context: .
-      dockerfile: docker/nodejs/Dockerfile
-    entrypoint: /usr/local/bin/node
-    command: run build
-    volumes:
-      - ~/.ssh:/home/node/.ssh
       - ${PWD}:/app
-  server:
-    image: zcodeapp/nodejs
-    build:
-      context: .
-      dockerfile: docker/nodejs/Dockerfile
-    entrypoint: /usr/local/bin/node
-    command: run server
-    volumes:
-      - ~/.ssh:/home/node/.ssh
-      - ${PWD}:/app
+    networks:
+      - public
   test:
     image: zcodeapp/nodejs
     build:
@@ -39,9 +21,14 @@ services:
     user: node
     volumes:
       - ~/.ssh:/home/node/.ssh
-      - /var/www/msexpandable:/app
-      - /var/www/msexpandable/node_modules:/var/node_modules
+      - ${PWD}:/app
     environment:
       - NODE_ENV=development
     ports:
       - 9229:9229
+    networks:
+      - public
+
+networks:
+  public:
+    driver: bridge

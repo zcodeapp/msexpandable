@@ -1,5 +1,7 @@
 import { IDi, TConstructor } from "@zcodeapp/interfaces";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export class Di implements IDi {
   static instance: IDi;
 
@@ -61,7 +63,7 @@ export class Di implements IDi {
     if (typeof args === 'string' || typeof args === 'function')
       return args;
     
-    for (var i in args) {
+    for (const i in args) {
       let value;
       try {
         value = this.get(args[i]);

@@ -2,15 +2,15 @@ FROM node:18
 
 ARG NPM_TOKEN=$NPM_TOKEN
 ENV NPM_TOKEN=$NPM_TOKEN
-ENV NODE_PATH=/var/node_modules
-ENV PATH="$PATH:/app/node_modules/jest/bin"
-ENV NODE_PATH="/var/node_modules"
 
-RUN apt-get update && apt-get install -y build-essential
+RUN apt-get update \
+    && apt-get install -y \
+        build-essential
 RUN npm install -g npm
 RUN chown node:node -R /usr/local/lib/node_modules \
     && chown node:node -R /usr/local/bin \
-    && npm cache clean -f
+    && npm cache clean -f \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 USER $USERNAME
 

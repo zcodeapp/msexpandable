@@ -1,0 +1,25 @@
+#!/bin/bash
+
+echo "Clean process [start]"
+
+rm -rf node_modules 
+
+source="src"
+excludes=("node_modules" "dist")
+
+if [ ! -d "$source" ]; then
+    echo "Directory '$source' not found"
+    exit 1
+fi
+
+for pack in "$source"/*/; do
+    for exclude in "${excludes[@]}"; do
+        path="${pack}${exclude}"
+        if [ -d "$path" ]; then
+            rm -rf "$path"
+            echo "Removed '$exclude' from $pack"
+        fi
+    done
+done
+
+echo "Clean process [end]"
