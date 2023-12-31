@@ -17,7 +17,7 @@
     "url": "git+git@github.com:zcodeapp/msexpandable.git"
   },
   "keywords": [
-    "interfaces"
+    "zcode interfaces"
   ],
   "author": "Joao Moraes <joaomoraesbr@gmail.com>",
   "license": "ISC",
