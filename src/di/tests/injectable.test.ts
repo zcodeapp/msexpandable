@@ -4,7 +4,6 @@ import { ExampleComplexInjectable } from "./mocks/ExampleComplexInjectable"
 import { Di } from "../src";
 import { ExampleComplexMultiInjectable } from "./mocks/ExampleComplexMultiInjectable";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 describe("Di Test", () => {
     
     let di: IDi;

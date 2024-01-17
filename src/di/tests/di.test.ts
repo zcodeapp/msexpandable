@@ -68,18 +68,6 @@ describe("Di Test", () => {
         expect(result1).toEqual(result2);
     });
 
-    // it("Test instance ExampleSimpleInject with all singleton auto class discover args constructor", () => {
-    //     di.register(ExampleSimpleCallback, [() => Utils.RandomString()], true);
-    //     di.register(ExampleSimpleCallbackInject);
-    //     const instance1 = di.get(ExampleSimpleCallbackInject);
-    //     const instance2 = di.get(ExampleSimpleCallbackInject);
-    //     const result1 = instance1.getClass().getContent();
-    //     const result2 = instance2.getClass().getContent();
-    //     expect(result1).toHaveLength(10);
-    //     expect(result2).toHaveLength(10);
-    //     expect(result1).toEqual(result2);
-    // });
-
     it("Test instance ExampleSimpleInject with class dependency singleton", () => {
         di.register(ExampleSimpleCallback, [() => Utils.RandomString()], true);
         di.register(ExampleSimpleCallbackInject, [ExampleSimpleCallback], false);
