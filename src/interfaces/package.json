@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Interfaces only\"",
-    "build": "tsc && npm run eslint",
+    "build": "rm -rf dist && tsc && npm run eslint",
     "eslint": "eslint --ext .ts ."
   },
   "publishConfig": {

@@ -7,7 +7,6 @@ import { ExampleSimpleCallback } from "./mocks/ExampleSimpleCallback";
 import { ExampleSimpleCallbackInject } from "./mocks/ExampleSimpleCallbackInject";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 describe("Di Test", () => {
 
     let di: IDi;
@@ -21,35 +20,80 @@ describe("Di Test", () => {
     });
 
     it("Test instance string singleton content", () => {
-        di.register("key", "value", true);
-        expect(di.get("key")).toBe("value")
+        const key = Utils.RandomString();
+        const content = Utils.RandomString();
+        di.register(key, content, true);
+        expect(di.get(key)).toBe(content)
     });
 
     it("Test instance string non-singleton content", () => {
-        di.register("key", "value", false);
-        expect(di.get("key")).toBe("value")
+        const key = Utils.RandomString();
+        const content = Utils.RandomString();
+        di.register(key, content, false);
+        expect(di.get(key)).toBe(content)
     });
 
     it("Test instance string with lambda generator and singleton", () => {
-        di.register<any, any>("key2", () => "value2", true);
-        const value = di.get<() => string>("key2");
-        expect(value()).toBe("value2")
+        const key = Utils.RandomString();
+        const content = Utils.RandomString();
+        di.register<any, any>(key, () => content, true);
+        const value = di.get<() => string>(key);
+        expect(value()).toBe(content)
     });
 
     it("Test instance string with lambda generator and non-singleton", () => {
-        di.register<any, any>("key3", () => "value3", false);
-        const value = di.get<() => string>("key3");
-        expect(value()).toBe("value3")
+        const key = Utils.RandomString();
+        const content = Utils.RandomString();
+        di.register<any, any>(key, () => content, false);
+        const value = di.get<() => string>(key);
+        expect(value()).toBe(content)
     });
 
     it("Test instance ExampleSimpleString with singleton", () => {
-        di.register(ExampleSimpleString, ["test content"], true);
+        const content = Utils.RandomString();
+        di.register(ExampleSimpleString, [content], true);
         const instance = di.get(ExampleSimpleString);
-        expect(instance.getContent()).toBe("test content")
+        expect(instance.getContent()).toBe(content)
     });
 
-    it("Test instance ExampleSimpleInject with singleton", () => {
+    it("Test instance ExampleSimpleInject with all singleton passing args constructor", () => {
         di.register(ExampleSimpleCallback, [() => Utils.RandomString()], true);
+        di.register(ExampleSimpleCallbackInject, [ExampleSimpleCallback], true);
+        const instance1 = di.get(ExampleSimpleCallbackInject);
+        const instance2 = di.get(ExampleSimpleCallbackInject);
+        const result1 = instance1.getClass().getContent();
+        const result2 = instance2.getClass().getContent();
+        expect(result1).toHaveLength(10);
+        expect(result2).toHaveLength(10);
+        expect(result1).toEqual(result2);
+    });
+
+    // it("Test instance ExampleSimpleInject with all singleton auto class discover args constructor", () => {
+    //     di.register(ExampleSimpleCallback, [() => Utils.RandomString()], true);
+    //     di.register(ExampleSimpleCallbackInject);
+    //     const instance1 = di.get(ExampleSimpleCallbackInject);
+    //     const instance2 = di.get(ExampleSimpleCallbackInject);
+    //     const result1 = instance1.getClass().getContent();
+    //     const result2 = instance2.getClass().getContent();
+    //     expect(result1).toHaveLength(10);
+    //     expect(result2).toHaveLength(10);
+    //     expect(result1).toEqual(result2);
+    // });
+
+    it("Test instance ExampleSimpleInject with class dependency singleton", () => {
+        di.register(ExampleSimpleCallback, [() => Utils.RandomString()], true);
+        di.register(ExampleSimpleCallbackInject, [ExampleSimpleCallback], false);
+        const instance1 = di.get(ExampleSimpleCallbackInject);
+        const instance2 = di.get(ExampleSimpleCallbackInject);
+        const result1 = instance1.getClass().getContent();
+        const result2 = instance2.getClass().getContent();
+        expect(result1).toHaveLength(10);
+        expect(result2).toHaveLength(10);
+        expect(result1).toEqual(result2);
+    });
+
+    it("Test instance ExampleSimpleInject with class singleton", () => {
+        di.register(ExampleSimpleCallback, [() => Utils.RandomString()], false);
         di.register(ExampleSimpleCallbackInject, [ExampleSimpleCallback], true);
         const instance1 = di.get(ExampleSimpleCallbackInject);
         const instance2 = di.get(ExampleSimpleCallbackInject);

@@ -1,8 +1,11 @@
-// import { IInjectableOptions, TConstructor } from "@zcodeapp/interfaces";
-// import { Di } from ".";
+import { IInjectableOptions } from "@zcodeapp/interfaces";
+import { Di } from ".";
+import "reflect-metadata";
 
-// export function Injectable<T>(options?: IInjectableOptions) {
-//     return function (constructor: TConstructor<T>) {
-//         Di.getInstance().register(constructor, options?.args ?? [], options?.singleton);
-//     };
-// }
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export function Injectable(options?: IInjectableOptions): any {
+    return function(constructor: any) {
+        const di = Di.getInstance();
+        di.register(constructor, options?.args, options?.singleton ?? false);
+    };
+}

@@ -21,7 +21,7 @@ services:
     user: node
     volumes:
       - ~/.ssh:/home/node/.ssh
-      - ${PWD}:/app
+      - /var/www/msexpandable:/app
     environment:
       - NODE_ENV=development
     ports:

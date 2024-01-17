@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "node --inspect=0.0.0.0:9229 -r ts-node/register /app/node_modules/jest/bin/jest.js tests",
-    "build": "tsc && npm run eslint",
+    "build": "rm -rf dist && tsc && npm run eslint",
     "eslint": "eslint --ext .ts ."
   },
   "repository": {
