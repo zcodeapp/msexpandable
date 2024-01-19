@@ -1,4 +1,4 @@
-import { Injectable } from "../../src/injectable"
+import { Injectable } from "../../../src/injectable"
 import { ExampleComplexInjectable } from "./ExampleComplexInjectable";
 import { ExampleSimpleInjectable } from "./ExampleSimpleInjectable";
 

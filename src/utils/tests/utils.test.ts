@@ -1,5 +1,9 @@
 import { Utils } from "../src/utils";
 
+interface IOriginalClone {
+    name: string;
+}
+
 describe("Utils Test", () => {
 
     it("Test length random string", () => {
@@ -15,4 +19,12 @@ describe("Utils Test", () => {
             }
         }).not.toThrow();
     });
+
+    it ("Test clone object", () => {
+        const original: IOriginalClone = { "name": "Example" };
+        const clone = Utils.Clone<IOriginalClone>(original);
+        clone.name = "Changed";
+        expect(original.name).toBe("Example");
+        expect(clone.name).toBe("Changed");
+    })
 })

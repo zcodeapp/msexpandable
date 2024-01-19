@@ -1,6 +1,7 @@
 import "reflect-metadata";
-import { IDi, TConstructor, IDiInstance } from "@zcodeapp/interfaces";
+import { IDi, TConstructor, IDiInstance, IDiOptions, IDiConstructor } from "@zcodeapp/interfaces";
 import * as CryptoJS from 'crypto-js';
+// import { Utils } from "@zcodeapp/utils";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export class Di implements IDi {
@@ -9,26 +10,56 @@ export class Di implements IDi {
   private readonly PARAMS_METADATA = 'design:paramtypes';
   private readonly _instances: IDiInstance[] = [];
 
-  static getInstance(): IDi {
+  static getInstance(_options?: IDiConstructor): IDi {
+    if (_options?.cleanSingleton)
+      this.instance = undefined;
+      
     if (!this.instance)
-      this.instance = new Di();
+      this.instance = new Di(_options);
+    else
+      if(_options)
+        this.instance.updateOptions(_options);
 
     return this.instance;
   }
 
-  public register<T, Args extends any[] = any>(key: TConstructor<T> | string, args?: Args, isSingleton?: boolean): void {
+  public constructor(
+    private _options?: IDiConstructor
+  ) { }
+
+  public updateOptions(_options: IDiConstructor): void {
+    this._options = _options;
+  }
+
+  public register<T>(key: TConstructor<T> | string, options?: IDiOptions): void {
 
     const unique = this.getKey(key);
-    if (this._instances.find(x => x.unique == unique))
+    const exists = this._instances.find(x => x.unique == unique);
+    
+    if (exists && this._options?.restrictRewriteKey)
       throw new Error(`Error on try overwrite instance [${key.toString()}]`);
 
-    this._instances.push({
+    const payload = {
       key,
       unique,
-      singleton: isSingleton ?? false,
+      singleton: options?.singleton ?? true,
       instance: null,
-      args
-    });
+      value: options?.value ?? undefined,
+      providers: options?.providers ?? [],
+      factory: options?.factory ?? undefined
+    };
+
+    if (exists) {
+      const index = this._instances.findIndex(x => x.unique == unique);
+      this._instances[index] = payload;
+    } else {
+      this._instances.push(payload);
+    }
+  }
+
+  public provider<T = any>(key: TConstructor<T>, providers: any[]): void {
+    const instance = this.findInstance(key);
+    instance.providers = [...instance.providers, ...providers];
   }
 
   public get<T>(key: TConstructor<T> | string): T {
@@ -38,22 +69,14 @@ export class Di implements IDi {
     if (instance.instance)
       return instance.instance;
       
-    const args = this.getArgs(instance);
+    const providers = this.getArgs(instance);
 
     if (instance.singleton) {
-      if (typeof instance.key == 'string')
-        instance.instance = instance.args;
-      else
-        instance.instance = new instance.key(...this.args(args.length > 0 ? args : instance.args));
-
-      // this._instances[index] = instance;
+      instance.instance = this.getInstance(instance, providers);
       return instance.instance;
     }
 
-    if (typeof instance.key == 'string')
-       return instance.args as T;
-
-    return new instance.key(...this.args(args.length > 0 ? args : instance.args));
+    return this.getInstance(instance, providers);
   }
 
   private findInstance<T>(key: TConstructor<T> | string): IDiInstance {
@@ -69,18 +92,26 @@ export class Di implements IDi {
 
   private parseMetadata(instance: IDiInstance, existingMetadata: any[]): any {
     const args = [];
+    const loaded: string[] = [];
     for(const item in existingMetadata) {
       let value;
       const type = (existingMetadata[item]?.name ?? "").toLowerCase();
       if (type && type != "") {
-        for (const dep in instance.args) {
-          const depType = (typeof instance.args[dep]).toLowerCase();
-          if (depType != "" && depType == type)
-            value = instance.args[dep];
+        const _args = instance.providers;
+        for (const dep in _args) {
+          const depType = (typeof _args[dep]).toLowerCase();
+          if (depType != "" && depType == type && !loaded.find(x => x == dep)) {
+            value = _args[dep];
+            loaded.push(dep);
+            break;
+          }
 
-          const depTypeConstructor = (instance.args[dep]?.name ?? "").toLowerCase();
-          if (depTypeConstructor != "" && depTypeConstructor == type)
-            value = instance.args[dep];
+          // const depTypeConstructor = (_args[dep]?.name ?? "").toLowerCase();
+          // if (depTypeConstructor != "" && depTypeConstructor == type && !loaded.find(x => x == dep)) {
+          //   value = _args[dep];
+          //   loaded.push(dep);
+          //   break;
+          // }
         }
         if (!value) {
           const instance = this.get(type);
@@ -89,7 +120,7 @@ export class Di implements IDi {
         }
       }
       if (!value) {
-        throw new Error(`Param constructor not found [${existingMetadata[item]?.name}]`);
+        throw new Error(`Param constructor not found [${instance.key.toString()}]`);
       }
       args.push(value);
     }
@@ -97,15 +128,13 @@ export class Di implements IDi {
   }
 
   private getArgs(instance: IDiInstance) {
-    let args = [];
     if (typeof instance.key == "function") {
       const existingMetadata = Reflect.getMetadata(this.PARAMS_METADATA, instance.key) || [];
       if (existingMetadata && existingMetadata.length > 0) {
-        args = this.parseMetadata(instance, existingMetadata) ?? [];
+        return this.parseMetadata(instance, existingMetadata);
       }
     }
-
-    return args;
+    return [];
   }
 
   private getKey<T>(key: TConstructor<T> | string): string {
@@ -134,5 +163,20 @@ export class Di implements IDi {
     }
 
     return _args;
+  }
+
+  private getInstance(instance: IDiInstance, providers?: any[]) {
+    if (instance.factory && typeof instance.factory == "function") {
+      return instance.factory();
+    } else {
+      if (typeof instance.key == "string") {
+        if (instance.value == undefined || instance.value == "")
+          throw new Error(`Configuration not have value [${instance.key}]`);
+
+        return instance.value;
+      } else {
+        return new instance.key(...this.args(providers.length > 0 ? providers : instance.providers));
+      }
+    }
   }
 }

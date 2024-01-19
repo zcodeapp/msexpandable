@@ -1,4 +1,4 @@
-import { Injectable } from "../../src/injectable"
+import { Injectable } from "../../../src/injectable"
 import { ExampleSimpleInjectable } from "./ExampleSimpleInjectable";
 
 @Injectable({ singleton: true })

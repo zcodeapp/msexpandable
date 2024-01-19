@@ -1,7 +1,7 @@
-import { Injectable } from "../../src/injectable"
+import { Injectable } from "../../../src"
 
-@Injectable({ singleton: true, args: ["content", 12345] })
-export class ExampleSimpleInjectable {
+@Injectable({ singleton: true, providers: ["content", 12345] })
+export class ExampleSimpleInject {
   private _content: string;
   private _second: number;
   public constructor(

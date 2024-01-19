@@ -6,5 +6,7 @@ export interface IDiInstance {
     unique: string,
     singleton?: boolean,
     instance?: any,
-    args?: any
+    value?: string,
+    providers?: any[],
+    factory?: () => any
   }

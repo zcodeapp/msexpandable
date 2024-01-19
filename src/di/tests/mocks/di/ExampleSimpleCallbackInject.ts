@@ -1,4 +1,4 @@
-import { ExampleSimpleCallback } from "./ExampleSimpleCallback";
+import { ExampleSimpleCallback } from ".";
 
 export class ExampleSimpleCallbackInject {
   private _class: ExampleSimpleCallback;
