@@ -78,6 +78,6 @@ describe("Di Injectable Test", () => {
     it("Test error on try construct not found dependency class", () => {
         expect(() => {
             di.get(ExampleComplexInjectableNotFoundSingleton);
-        }).toThrow(`Param constructor not found [${ExampleComplexInjectableNotFoundSingleton.toString()}]`);
+        }).toThrow(`Param constructor from metadata empty [${ExampleComplexInjectableNotFoundSingleton.toString()}]`);
     });
 });
