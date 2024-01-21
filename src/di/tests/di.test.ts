@@ -2,6 +2,7 @@ import { IDi } from "@zcodeapp/interfaces";
 import { Utils } from "@zcodeapp/utils";
 import { Di } from "../src"
 import { ExampleSimpleString, ExampleSimpleCallback, ExampleSimpleCallbackInject } from "./mocks/di"
+import { Logger } from "@zcodeapp/logger";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 describe("Di Test", () => {
@@ -17,6 +18,15 @@ describe("Di Test", () => {
     it("Test instance Di", () => {
         expect(di).toBeInstanceOf(Di)
     });
+
+    it("Test passing logger instance", () => {
+        di = Di.getInstance({
+            restrictRewriteKey: false,
+            logger: Logger.getInstance(),
+            cleanSingleton: true
+        });
+        expect(di).toBeInstanceOf(Di)
+    })
 
     it("Test clean instance di", () => {
         const key = Utils.RandomString();

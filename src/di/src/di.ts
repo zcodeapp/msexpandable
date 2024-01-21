@@ -5,8 +5,10 @@ import {
   TConstructor,
   IDiInstance,
   IDiOptions,
-  IDiConstructor
+  IDiConstructor,
+  ILogger
 } from "@zcodeapp/interfaces";
+import { Logger } from "@zcodeapp/logger";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export class Di implements IDi {
@@ -31,9 +33,10 @@ export class Di implements IDi {
     if (_options?.cleanSingleton)
       this.instance = undefined;
       
-    if (!this.instance)
-      this.instance = new Di(_options);
-    else if(_options)
+    if (!this.instance) {
+      const _logger = _options?.logger ?? Logger.getInstance();
+      this.instance = new Di(_logger, _options);
+    } else if(_options)
       this.instance.updateOptions(_options);
 
     return this.instance;
@@ -45,8 +48,11 @@ export class Di implements IDi {
    * @param _options Options for construct instance
    */
   public constructor(
+    private readonly _logger: ILogger,
     private _options?: IDiConstructor
-  ) { }
+  ) {
+    this._logger.addPrefix("[Di] ");
+  }
 
   /**
    * Method for update options of instance without new create
@@ -54,6 +60,7 @@ export class Di implements IDi {
    * @param _options Options for construct instance
    */
   public updateOptions(_options: IDiConstructor): void {
+    this._logger.warn("Update options", { _options });
     this._options = _options;
   }
 
@@ -65,26 +72,39 @@ export class Di implements IDi {
    */
   public register<T>(key: TConstructor<T> | string, options?: IDiOptions): void {
 
-    const unique = this._getKey(key);
-    const exists = this._instances.find(x => x.unique == unique);
-    
-    if (exists && this._options?.restrictRewriteKey)
-      throw new Error(`Error on try overwrite instance [${key.toString()}]`);
+    try {
+      this._logger.debug("Register instance", { key, options, diOptions: this._options });
 
-    const payload = {
-      key,
-      unique,
-      singleton: options?.singleton ?? true,
-      instance: null,
-      value: options?.value ?? undefined,
-      providers: options?.providers ?? [],
-      factory: options?.factory ?? undefined
-    };
+      const unique = this._getKey(key);
+      const exists = this._instances.find(x => x.unique == unique);
+      
+      this._logger.debug("Unique and exists data", { unique, exists });
+      
+      if (exists && this._options?.restrictRewriteKey)
+        throw new Error(`Error on try overwrite instance [${key.toString()}]`);
 
-    if (exists)
-      this._instances[this._instances.findIndex(x => x.unique == unique)] = payload;
-    else
-      this._instances.push(payload);
+      const payload = {
+        key,
+        unique,
+        singleton: options?.singleton ?? true,
+        instance: null,
+        value: options?.value ?? undefined,
+        providers: options?.providers ?? [],
+        factory: options?.factory ?? undefined
+      };
+      
+      this._logger.debug("Payload for register", { payload });
+
+      if (exists)
+        this._instances[this._instances.findIndex(x => x.unique == unique)] = payload;
+      else
+        this._instances.push(payload);
+
+      this._logger.debug("Success register key", { key, options });
+    } catch (ex) {
+      this._logger.fatal("Fatal error on try register instance", { key, options, ex });
+      throw ex;
+    }
   }
 
   /**
@@ -94,8 +114,15 @@ export class Di implements IDi {
    * @param providers List providers for dependency
    */
   public provider<T = any>(key: TConstructor<T>, providers: any[]): void {
-    const instance = this._findInstance(key);
-    instance.providers = [...instance.providers, ...providers];
+    try {
+      this._logger.debug("Add provider for instance", { key, providers });
+      const instance = this._findInstance(key);
+      instance.providers = [...instance.providers, ...providers];
+      this._logger.debug("Success add provider for instance", { key, providers });
+    } catch (ex) {
+      this._logger.fatal("Fatal error on try add provider", { key, ex });
+      throw ex;
+    }
   }
 
   /**
@@ -105,20 +132,30 @@ export class Di implements IDi {
    * @returns Instance or string|number|bool information
    */
   public get<T>(key: TConstructor<T> | string): T {
+    try {
+      this._logger.debug("Try get instance", { key });
 
-    const instance = this._findInstance(key);
+      const instance = this._findInstance(key);
 
-    if (instance.instance)
-      return instance.instance;
-      
-    const providers = this._getInstanceProviders(instance);
+      if (instance.instance) {
+        this._logger.debug("Return singleton instance");
+        return instance.instance;
+      }
 
-    if (instance.singleton) {
-      instance.instance = this._getInstance(instance, providers);
-      return instance.instance;
+      const providers = this._getInstanceProviders(instance);
+
+      if (instance.singleton) {
+        instance.instance = this._getInstance(instance, providers);
+        this._logger.debug("Return singleton instance");
+        return instance.instance;
+      }
+
+      this._logger.debug("Return non-singleton instance");
+      return this._getInstance(instance, providers);
+    } catch (ex) {
+      this._logger.fatal("Fatal error on try get instance", { key, ex });
+      throw ex;
     }
-
-    return this._getInstance(instance, providers);
   }
 
   /**
@@ -129,8 +166,13 @@ export class Di implements IDi {
    */
   private _findInstance<T>(key: TConstructor<T> | string): IDiInstance {
     const unique = this._getKey(key);
+
+    this._logger.debug("Try find instance", { unique });
+
     const instance = this._instances.find(x => x.unique == unique);
     const index = this._instances.findIndex(x => x.unique == unique);
+    
+    this._logger.debug("Success find instance", { instance, index });
 
     if (index < 0 || !instance)
       throw new Error(`Instance not found [${key.toString()}]`);
@@ -146,12 +188,15 @@ export class Di implements IDi {
    */
   private _getInstanceProviders(instance: IDiInstance) {
     if (typeof instance.key == "function") {
+      this._logger.debug("Try get metadata from Reflect", { instance });
       const existingMetadata = Reflect.getMetadata('design:paramtypes', instance.key) || [];
       if (existingMetadata && existingMetadata.length > 0) {
+        this._logger.debug("Success get metadata from Reflect", { existingMetadata });
         const exclude: string[] = [];
         return existingMetadata.map(metadata => this._parseMetadataValue(instance, metadata, exclude));
       }
     }
+    this._logger.debug("Return empty metadata");
     return [];
   }
 
@@ -166,18 +211,21 @@ export class Di implements IDi {
   private _parseMetadataValue(instance: IDiInstance, metadata: any, exclude: string[]) {
     const type = (metadata?.name ?? "").toLowerCase();
     
+    this._logger.debug("Try parse metadata", { instance, metadata, exclude });
+
     if (!type || type == "")
       throw new Error(`Param constructor from metadata empty [${instance.key.toString()}]`);
 
-    for (const provider in instance.providers) {
-      const depType = (typeof instance.providers[provider]).toLowerCase();
-      if (depType != "" && depType == type && !exclude.find(x => x == provider)) {
-        exclude.push(provider);
-        return instance.providers[provider];
+    this._logger.debug("Try find into instance providers");
+    
+    return instance.providers.find((provider, index) => {
+      const depType = (typeof provider).toLowerCase();
+      if (depType == type && !exclude.find(x => x == String(index))) {
+        exclude.push(String(index));
+        this._logger.debug("Success find providers into instance", { index, provider });
+        return provider;
       }
-    }
-
-    return this.get(type);
+    }) ?? this.get(type);
   }
 
   /**
@@ -187,15 +235,22 @@ export class Di implements IDi {
    * @returns 
    */
   private _getKey<T>(key: TConstructor<T> | string): string {
+    this._logger.debug("Get hash key for instance", { key });
+      
     let _key = JSON.stringify(key);
     if (typeof key == "string")
       _key = key.toLocaleLowerCase();
     
     if (typeof key == "function")
       _key = key.name.toLocaleLowerCase();
+
+    this._logger.debug("Key for hash", { key, _key });
   
-  
-    return CryptoJS.MD5(JSON.stringify(_key)).toString();
+    const result = CryptoJS.MD5(JSON.stringify(_key)).toString();
+
+    this._logger.debug("Success get key hash for instance", { key, result });
+
+    return result;
   }
 
   /**
@@ -207,18 +262,23 @@ export class Di implements IDi {
    */
   private _getInstance(instance: IDiInstance, providers?: any[]) {
     if (instance.factory && typeof instance.factory == "function") {
+      this._logger.debug("Return factory", { instance });
       return instance.factory();
     }
     
     if (typeof instance.key == "string") {
+
       if (instance.value == undefined || instance.value == "")
         throw new Error(`Configuration not have value [${instance.key}]`);
 
+      this._logger.debug("Return string value", { value: instance.value });
       return instance.value;
     }
     
-    if (typeof instance.key == "function")
+    if (typeof instance.key == "function") {
+      this._logger.debug("Return function value", { providers, instanceProviders: instance.providers });
       return new instance.key(...this._providers(providers.length > 0 ? providers : instance.providers));
+    }
   }
 
   /**
@@ -228,10 +288,13 @@ export class Di implements IDi {
    * @returns Provider value
    */
   private _providers(providers: any[]) {
+    this._logger.debug("Return providers for construct", { providers });
     return providers.map(provider => {
       try {
+        this._logger.debug("Try return from get method");
         return this.get(provider);
       } catch {
+        this._logger.debug("Method get have error, return provider");
         return provider;
       }
     });
