@@ -1,0 +1,6 @@
+flags:
+  logger:
+    paths:
+      - src/logger/
+fix: 
+  - "::src/logger/"
