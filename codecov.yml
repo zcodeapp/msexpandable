@@ -17,3 +17,7 @@ flag_management:
           target: 20%
         - type: patch
           target: 100%
+flags:
+  logger:
+    paths:
+      - src/logger/

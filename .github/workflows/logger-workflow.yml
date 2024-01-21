@@ -39,7 +39,7 @@ jobs:
       uses: codecov/codecov-action@v3
       with:
         file: ./src/logger/coverage/coverage-final.json
-        flags: unittests
+        flags: logger
         name: logger
         fail_ci_if_error: true
         verbose: true

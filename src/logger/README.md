@@ -1,5 +1,7 @@
 # Logger
 
+[![Logger CI](https://github.com/zcodeapp/msexpandable/actions/workflows/logger-workflow.yml/badge.svg?branch=main)](https://github.com/zcodeapp/msexpandable/actions/workflows/logger-workflow.yml) [![codecov](https://codecov.io/gh/zcodeapp/msexpandable/graph/badge.svg?token=ZHJHX9L0CN)](https://codecov.io/gh/zcodeapp/msexpandable)
+
 ## Overview
 
 This TypeScript `Logger` class is part of the `@zcodeapp` packages. It offers a flexible logging system with support for different logging strategies and levels.
