@@ -1,6 +1,6 @@
 # Logger
 
-[![Logger CI](https://github.com/zcodeapp/msexpandable/actions/workflows/logger-workflow.yml/badge.svg?branch=main)](https://github.com/zcodeapp/msexpandable/actions/workflows/logger-workflow.yml) [![codecov](https://codecov.io/gh/zcodeapp/msexpandable/graph/badge.svg?token=ZHJHX9L0CN)](https://codecov.io/gh/zcodeapp/msexpandable)
+[![Logger CI](https://github.com/zcodeapp/msexpandable/actions/workflows/logger-workflow.yml/badge.svg?branch=main)](https://github.com/zcodeapp/msexpandable/actions/workflows/logger-workflow.yml) [![codecov](https://codecov.io/gh/zcodeapp/msexpandable/branch/main/graph/badge.svg?token=ZHJHX9L0CN&flag=logger)](https://app.codecov.io/gh/zcodeapp/msexpandable/tree/main/src%2Flogger%2Fsrc)
 
 ## Overview
 
