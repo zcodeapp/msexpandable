@@ -19,11 +19,6 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Set Node.js version
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18'
-
     - name: Install Dependencies
       run: npm install && ls -la && ls -la ../../node_modules/@zcodeapp
       working-directory: ./src/logger
