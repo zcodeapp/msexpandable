@@ -1,0 +1,46 @@
+name: Di CI
+
+on:
+  push:
+    paths:
+      - 'src/di/**'
+  pull_request:
+    paths:
+      - 'src/di/**'
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Remove package.json root
+      run: rm package.json package-lock.json
+      working-directory: ./
+
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./src/di
+
+    - name: Run Build
+      run: npm run build
+      working-directory: ./src/di
+
+    - name: Run Tests and Collect Coverage
+      run: npm run test-ci
+      working-directory: ./src/di
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./src/di/coverage/coverage-final.json
+        flags: di
+        name: di
+        fail_ci_if_error: true
+        verbose: true
+

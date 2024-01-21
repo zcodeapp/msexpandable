@@ -17,7 +17,19 @@ flag_management:
           target: 20%
         - type: patch
           target: 100%
+    - name: di
+      paths: 
+      - src/di
+      carryforward: true
+      statuses:
+        - type: project
+          target: 20%
+        - type: patch
+          target: 100%
 flags:
   logger:
     paths:
       - src/logger/
+  di:
+    paths:
+      - src/di/
