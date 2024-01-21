@@ -20,8 +20,8 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install Dependencies
-      run: npm install && ls -la && ls -la ../../node_modules/@zcodeapp
-      working-directory: ./src/logger
+      run: npm install
+      working-directory: ./
 
     - name: Run Build
       run: npm run build
