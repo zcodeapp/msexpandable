@@ -31,6 +31,15 @@ jobs:
       run: npm run build
       working-directory: ./src/logger
 
-    - name: Run Tests
+    - name: Run Tests and Collect Coverage
       run: npm run test-ci
       working-directory: ./src/logger
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        directory: ./src/logger/coverage
+        flags: logger
+        name: codecov-logger
+        fail_ci_if_error: true
