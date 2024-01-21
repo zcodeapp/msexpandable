@@ -42,6 +42,7 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         directory: ./src/logger/coverage
+        flags: logger
 
 
 
