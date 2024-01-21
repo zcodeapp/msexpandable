@@ -32,5 +32,5 @@ jobs:
       working-directory: ./src/logger
 
     - name: Run Tests
-      run: npm run test
+      run: npm run test-ci
       working-directory: ./src/logger
