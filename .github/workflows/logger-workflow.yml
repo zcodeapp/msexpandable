@@ -35,9 +35,10 @@ jobs:
       run: npm run test-ci
       working-directory: ./src/logger
 
-    - name: Upload coverage to Codecov
-      run: |
-        curl -Os https://uploader.codecov.io/latest/linux/codecov
-        chmod +x codecov
-        ./codecov -t ${{ secrets.CODECOV_TOKEN }} -F logger -s ./src/logger/coverage
-      working-directory: ./
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      working-directory: ./src/logger
+
+
