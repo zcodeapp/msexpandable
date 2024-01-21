@@ -36,10 +36,7 @@ jobs:
       working-directory: ./src/logger
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v2
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        directory: ./src/logger/coverage
-        flags: logger
-        name: codecov-logger
-        fail_ci_if_error: true
+      run: |
+        curl -Os https://uploader.codecov.io/latest/linux/codecov
+        chmod +x codecov
+        ./codecov -t ${{ secrets.CODECOV_TOKEN }} -s ./src/logger/coverage
