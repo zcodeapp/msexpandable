@@ -200,6 +200,12 @@ describe("Logger Test", () => {
     expect(fatal?.params).toBe(undefined);
   });
 
+  it("Test new instance without options", () => {
+    expect(() => {
+      new Logger({} as any)
+    }).toThrow("Logger strategy empty");
+  });
+
   it("Test getInstance new instance", () => {
     logger = Logger.getInstance({
       strategy: new TestStrategy(strategy),
@@ -219,7 +225,7 @@ describe("Logger Test", () => {
 
   it("Test Logger with no strategy", () => {
     expect(() => {
-      new Logger({} as ILoggerOptions)
+      new Logger({ breakline: true } as ILoggerOptions)
     }).toThrow("Logger strategy empty");
   });
 
