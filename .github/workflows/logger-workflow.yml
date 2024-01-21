@@ -36,8 +36,8 @@ jobs:
       working-directory: ./src/logger
 
     - name: Upload coverage to Codecov
-        run: |
-          curl -Os https://uploader.codecov.io/latest/linux/codecov
-          chmod +x codecov
-          ./codecov -t ${{ secrets.CODECOV_TOKEN }} -F logger -s ./src/logger/coverage
-        working-directory: ./
+      run: |
+        curl -Os https://uploader.codecov.io/latest/linux/codecov
+        chmod +x codecov
+        ./codecov -t ${{ secrets.CODECOV_TOKEN }} -F logger -s ./src/logger/coverage
+      working-directory: ./
