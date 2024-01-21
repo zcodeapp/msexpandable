@@ -1,6 +1,19 @@
-flags:
-  logger:
-    paths:
-      - src/logger/
-fix: 
-  - "::src/logger/"
+flag_management:
+  default_rules:
+    carryforward: true
+    statuses:
+      - type: project
+        target: auto
+        threshold: 1%
+      - type: patch
+        target: 90%
+  individual_flags:
+    - name: logger
+      paths: 
+      - src/logger
+      carryforward: true
+      statuses:
+        - type: project
+          target: 20%
+        - type: patch
+          target: 100%
