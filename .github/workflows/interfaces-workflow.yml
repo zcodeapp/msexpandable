@@ -1,0 +1,33 @@
+name: Interfaces CI
+
+on:
+  push:
+    paths:
+      - 'src/interfaces/**'
+  pull_request:
+    paths:
+      - 'src/interfaces/**'
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Remove package.json root
+      run: rm package.json package-lock.json
+      working-directory: ./
+
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./src/interfaces
+
+    - name: Run Build
+      run: npm run build
+      working-directory: ./src/interfaces
+
