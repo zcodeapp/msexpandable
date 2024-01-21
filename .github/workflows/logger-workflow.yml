@@ -1,0 +1,34 @@
+name: Logger CI
+
+on:
+  push:
+    paths:
+      - 'src/logger/**'
+  pull_request:
+    paths:
+      - 'src/logger/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set Node.js version
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./src/logger
+
+    - name: Run Build
+      run: npm run build
+      working-directory: ./src/logger
+
+    - name: Run Tests
+      run: npm run test
+      working-directory: ./src/logger
