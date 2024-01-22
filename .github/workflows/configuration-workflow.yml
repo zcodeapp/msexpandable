@@ -1,0 +1,46 @@
+name: Configuration CI
+
+on:
+  push:
+    paths:
+      - 'src/configuration/**'
+  pull_request:
+    paths:
+      - 'src/configuration/**'
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Remove package.json root
+      run: rm package.json package-lock.json
+      working-directory: ./
+
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./src/configuration
+
+    - name: Run Build
+      run: npm run build
+      working-directory: ./src/configuration
+
+    - name: Run Tests and Collect Coverage
+      run: npm run test-ci
+      working-directory: ./src/configuration
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./src/configuration/coverage/coverage-final.json
+        flags: configuration
+        name: configuration
+        fail_ci_if_error: true
+        verbose: true
+
