@@ -45,10 +45,10 @@ describe("Logger Test", () => {
   });
 
   it("Test debug message and params", () => {
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     const params = {
-      key1: Utils.RandomString(),
-      key2: Utils.RandomString()
+      key1: Utils.Strings.RandomString(),
+      key2: Utils.Strings.RandomString()
     };
     logger.debug(message, params);
     expect(debug?.message).toBe(`[DEBUG] ${message}`);
@@ -56,7 +56,7 @@ describe("Logger Test", () => {
   });
 
   it("Test debug message with no params", () => {
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     logger.debug(message);
     expect(debug?.message).toBe(`[DEBUG] ${message}`);
     expect(debug?.params).toBe(undefined);
@@ -67,17 +67,17 @@ describe("Logger Test", () => {
       strategy: new TestStrategy(strategy),
       level: ELoggerLevel.INFORMATION
     });
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     logger.debug(message);
     expect(debug?.message).toBe(undefined);
     expect(debug?.params).toBe(undefined);
   });
 
   it("Test info message and params", () => {
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     const params = {
-      key1: Utils.RandomString(),
-      key2: Utils.RandomString()
+      key1: Utils.Strings.RandomString(),
+      key2: Utils.Strings.RandomString()
     };
     logger.info(message, params);
     expect(info?.message).toBe(`[INFO] ${message}`);
@@ -85,7 +85,7 @@ describe("Logger Test", () => {
   });
 
   it("Test info message with no params", () => {
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     logger.info(message);
     expect(info?.message).toBe(`[INFO] ${message}`);
     expect(info?.params).toBe(undefined);
@@ -96,17 +96,17 @@ describe("Logger Test", () => {
       strategy: new TestStrategy(strategy),
       level: ELoggerLevel.WARNING
     });
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     logger.info(message);
     expect(info?.message).toBe(undefined);
     expect(info?.params).toBe(undefined);
   });
 
   it("Test warn message and params", () => {
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     const params = {
-      key1: Utils.RandomString(),
-      key2: Utils.RandomString()
+      key1: Utils.Strings.RandomString(),
+      key2: Utils.Strings.RandomString()
     };
     logger.warn(message, params);
     expect(warn?.message).toBe(`[WARN] ${message}`);
@@ -114,7 +114,7 @@ describe("Logger Test", () => {
   });
 
   it("Test warn message with no params", () => {
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     logger.warn(message);
     expect(warn?.message).toBe(`[WARN] ${message}`);
     expect(warn?.params).toBe(undefined);
@@ -125,17 +125,17 @@ describe("Logger Test", () => {
       strategy: new TestStrategy(strategy),
       level: ELoggerLevel.ERROR
     });
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     logger.warn(message);
     expect(warn?.message).toBe(undefined);
     expect(warn?.params).toBe(undefined);
   });
 
   it("Test error message and params", () => {
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     const params = {
-      key1: Utils.RandomString(),
-      key2: Utils.RandomString()
+      key1: Utils.Strings.RandomString(),
+      key2: Utils.Strings.RandomString()
     };
     logger.error(message, params);
     expect(error?.message).toBe(`[ERROR] ${message}`);
@@ -143,7 +143,7 @@ describe("Logger Test", () => {
   });
 
   it("Test error message with no params", () => {
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     logger.error(message);
     expect(error?.message).toBe(`[ERROR] ${message}`);
     expect(error?.params).toBe(undefined);
@@ -153,17 +153,17 @@ describe("Logger Test", () => {
     logger = Logger.getInstance({
       strategy: new TestStrategy(strategy)
     });
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     logger.error(message);
     expect(error?.message).toBe(undefined);
     expect(error?.params).toBe(undefined);
   });
 
   it("Test fatal message and params", () => {
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     const params = {
-      key1: Utils.RandomString(),
-      key2: Utils.RandomString()
+      key1: Utils.Strings.RandomString(),
+      key2: Utils.Strings.RandomString()
     };
     logger.fatal(message, params);
     expect(fatal?.message).toBe(`[FATAL] ${message}`);
@@ -171,7 +171,7 @@ describe("Logger Test", () => {
   });
 
   it("Test fatal message with no params", () => {
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     logger.fatal(message);
     expect(fatal?.message).toBe(`[FATAL] ${message}`);
     expect(fatal?.params).toBe(undefined);
@@ -181,7 +181,7 @@ describe("Logger Test", () => {
     logger = Logger.getInstance({
       strategy: new TestStrategy(strategy)
     });
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     logger.fatal(message);
     expect(fatal?.message).toBe(undefined);
     expect(fatal?.params).toBe(undefined);
@@ -190,10 +190,10 @@ describe("Logger Test", () => {
   it("Test getInstance without options", () => {
     logger = Logger.getInstance();
 
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     const params = {
-      key1: Utils.RandomString(),
-      key2: Utils.RandomString()
+      key1: Utils.Strings.RandomString(),
+      key2: Utils.Strings.RandomString()
     };
     logger.fatal(message, params);
     expect(fatal?.message).toBe(undefined);
@@ -213,10 +213,10 @@ describe("Logger Test", () => {
       newInstance: true
     });
 
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     const params = {
-      key1: Utils.RandomString(),
-      key2: Utils.RandomString()
+      key1: Utils.Strings.RandomString(),
+      key2: Utils.Strings.RandomString()
     };
     logger.debug(message, params);
     expect(debug?.message).toBe(`[DEBUG] ${message}`);
@@ -245,10 +245,10 @@ describe("Logger Test", () => {
 
   it("Test add prefix", () => {
     logger.addPrefix("[TEST] ");
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     const params = {
-      key1: Utils.RandomString(),
-      key2: Utils.RandomString()
+      key1: Utils.Strings.RandomString(),
+      key2: Utils.Strings.RandomString()
     };
     logger.debug(message, params);
     expect(debug?.message).toBe(`[DEBUG] [TEST] ${message}`);
@@ -264,10 +264,10 @@ describe("Logger Test", () => {
       level: ELoggerLevel.DEBUG
     } as any);
 
-    const message = Utils.RandomString();
+    const message = Utils.Strings.RandomString();
     const params = {
-      key1: Utils.RandomString(),
-      key2: Utils.RandomString()
+      key1: Utils.Strings.RandomString(),
+      key2: Utils.Strings.RandomString()
     };
     logger.debug(message, params);
     expect(debug?.message).toBe(`[DEBUG] ${message}`);
