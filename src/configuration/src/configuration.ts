@@ -25,15 +25,19 @@ export class Configuration implements IConfiguration {
   public async load(): Promise<void> {
     this._logger.info("Try load strategies");
     this._logger.debug("List strategies", { strategies: this._configurationStrategies });
-    this._configurationStrategies.map(async configuration => {
-      try {
-        this._configurationData = [... this._configurationData, ... await configuration.load()];
-        this._logger.info("Success load strategy", { strategy: configuration });
-        this._logger.debug("Strategy", { strategy: configuration });
-      } catch (ex) {
-        this._logger.error("Error on try load strategy", { strategy: configuration, ex });
-      }
-    })
+    await Promise.all(
+      this._configurationStrategies.map(async configuration => {
+        try {
+          const data = await configuration.load();
+          this._configurationData = [... this._configurationData, ... data];
+          this._logger.info("Success load strategy", { strategy: configuration });
+          this._logger.debug("Strategy", { strategy: configuration });
+        } catch (ex) {
+          this._logger.error("Error on try load strategy", { strategy: configuration, ex });
+          throw ex;
+        }
+      })
+    )
   }
 
   public get(key?: string): string {
