@@ -19,7 +19,7 @@ describe("Di Inject Test", () => {
     });
 
     it("Test inject string value from ExampleSimpleDependencyInjectValue di value", () => {
-        const value = Utils.RandomString();
+        const value = Utils.Strings.RandomString();
         di.register("dependency-value", {
             singleton: true,
             value
@@ -29,7 +29,7 @@ describe("Di Inject Test", () => {
     });
 
     it("Test inject string value from ExampleSimpleDependencyInjectValue di factory", () => {
-        const value = Utils.RandomString();
+        const value = Utils.Strings.RandomString();
         di.register("dependency-value", {
             singleton: true,
             factory: () => value

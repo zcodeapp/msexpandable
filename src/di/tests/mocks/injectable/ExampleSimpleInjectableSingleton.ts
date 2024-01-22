@@ -1,7 +1,7 @@
 import { Utils } from "@zcodeapp/utils";
 import { Injectable } from "../../../src/injectable"
 
-@Injectable({ singleton: true, providers: [() => Utils.RandomString(10)] })
+@Injectable({ singleton: true, providers: [() => Utils.Strings.RandomString(10)] })
 export class ExampleSimpleInjectableSingleton {
   private _secret: string;
   public constructor(

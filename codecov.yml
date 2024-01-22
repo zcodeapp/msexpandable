@@ -26,6 +26,15 @@ flag_management:
           target: 20%
         - type: patch
           target: 100%
+    - name: utils
+      paths: 
+      - src/utils
+      carryforward: true
+      statuses:
+        - type: project
+          target: 20%
+        - type: patch
+          target: 100%
 flags:
   logger:
     paths:
@@ -33,3 +42,6 @@ flags:
   di:
     paths:
       - src/di/
+  utils:
+    paths:
+      - src/utils/

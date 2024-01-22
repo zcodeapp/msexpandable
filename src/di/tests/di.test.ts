@@ -29,8 +29,8 @@ describe("Di Test", () => {
     })
 
     it("Test clean instance di", () => {
-        const key = Utils.RandomString();
-        const value = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
+        const value = Utils.Strings.RandomString();
         di.register(key, {
             value
         });
@@ -44,16 +44,16 @@ describe("Di Test", () => {
     });
 
     it("Test instance not found", () => {
-        const key = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
         expect(() => {
             di.get(key);
         }).toThrow(`Instance not found [${key}]`);
     });
 
     it("Test default (disabled) error on try rewrite key", () => {
-        const key = Utils.RandomString();
-        const value1 = Utils.RandomString();
-        const value2 = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
+        const value1 = Utils.Strings.RandomString();
+        const value2 = Utils.Strings.RandomString();
 
         const di = Di.getInstance({
             restrictRewriteKey: false
@@ -70,9 +70,9 @@ describe("Di Test", () => {
     });
 
     it("Test disable error on try rewrite key", () => {
-        const key = Utils.RandomString();
-        const value1 = Utils.RandomString();
-        const value2 = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
+        const value1 = Utils.Strings.RandomString();
+        const value2 = Utils.Strings.RandomString();
 
         const di = Di.getInstance({
             restrictRewriteKey: false
@@ -89,9 +89,9 @@ describe("Di Test", () => {
     });
 
     it("Test enable error on try rewrite key", () => {
-        const key = Utils.RandomString();
-        const value1 = Utils.RandomString();
-        const value2 = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
+        const value1 = Utils.Strings.RandomString();
+        const value2 = Utils.Strings.RandomString();
         const di = Di.getInstance({
             restrictRewriteKey: true
         });
@@ -106,8 +106,8 @@ describe("Di Test", () => {
     });
 
     it("Test instance string singleton content", () => {
-        const key = Utils.RandomString();
-        const value = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
+        const value = Utils.Strings.RandomString();
         di.register(key, {
             singleton: true,
             value
@@ -116,8 +116,8 @@ describe("Di Test", () => {
     });
 
     it("Test instance string non-singleton content", () => {
-        const key = Utils.RandomString();
-        const value = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
+        const value = Utils.Strings.RandomString();
         di.register(key, {
             singleton: false,
             value
@@ -126,10 +126,10 @@ describe("Di Test", () => {
     });
 
     it("Test instance string with factory generator and singleton", () => {
-        const key = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
         di.register(key, {
             singleton: true,
-            factory: () => Utils.RandomString()
+            factory: () => Utils.Strings.RandomString()
         });
         const result1 = di.get(key);
         const result2 = di.get(key);
@@ -137,10 +137,10 @@ describe("Di Test", () => {
     });
 
     it("Test instance string with factory generator and non-singleton", () => {
-        const key = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
         di.register(key, {
             singleton: false,
-            factory: () => Utils.RandomString()
+            factory: () => Utils.Strings.RandomString()
         });
         const result1 = di.get(key);
         const result2 = di.get(key);
@@ -148,7 +148,7 @@ describe("Di Test", () => {
     });
 
     it("Test instance ExampleSimpleString with singleton", () => {
-        const value = Utils.RandomString();
+        const value = Utils.Strings.RandomString();
         di.register(ExampleSimpleString, {
             singleton: true,
             providers: [value]
@@ -160,7 +160,7 @@ describe("Di Test", () => {
     it("Test instance ExampleSimpleCallbackInject with all singleton passing args constructor", () => {
         di.register(ExampleSimpleCallback, {
             singleton: true,
-            providers: [() => Utils.RandomString()]
+            providers: [() => Utils.Strings.RandomString()]
         });
         di.register(ExampleSimpleCallbackInject, {
             singleton: true,
@@ -178,7 +178,7 @@ describe("Di Test", () => {
     it("Test instance ExampleSimpleCallbackInject with class dependency singleton", () => {
         di.register(ExampleSimpleCallback, {
             singleton: true,
-            providers: [() => Utils.RandomString()]
+            providers: [() => Utils.Strings.RandomString()]
         });
         di.register(ExampleSimpleCallbackInject, {
             singleton: false,
@@ -196,7 +196,7 @@ describe("Di Test", () => {
     it("Test instance ExampleSimpleCallbackInject with class singleton", () => {
         di.register(ExampleSimpleCallback, {
             singleton: false,
-            providers: [() => Utils.RandomString()]
+            providers: [() => Utils.Strings.RandomString()]
         });
         di.register(ExampleSimpleCallbackInject, {
             singleton: true,
@@ -214,7 +214,7 @@ describe("Di Test", () => {
     it("Test instance ExampleSimpleCallbackInject with non-singleton", () => {
         di.register(ExampleSimpleCallback, {
             singleton: false,
-            providers: [() => Utils.RandomString()]
+            providers: [() => Utils.Strings.RandomString()]
         });
         di.register(ExampleSimpleCallbackInject, {
             singleton: false,
@@ -232,7 +232,7 @@ describe("Di Test", () => {
     it("Test provider for dependency injection singleton", () => {
         di.register(ExampleSimpleCallback, {
             singleton: true,
-            providers: [() => Utils.RandomString()]
+            providers: [() => Utils.Strings.RandomString()]
         });
         di.register(ExampleSimpleCallbackInject, {
             singleton: true
@@ -250,7 +250,7 @@ describe("Di Test", () => {
     it("Test provider for dependency injection non-singleton", () => {
         di.register(ExampleSimpleCallback, {
             singleton: false,
-            providers: [() => Utils.RandomString()]
+            providers: [() => Utils.Strings.RandomString()]
         });
         di.register(ExampleSimpleCallbackInject, {
             singleton: false
@@ -275,7 +275,7 @@ describe("Di Test", () => {
     });
 
     it("Test register undefined value for string singleton", () => {
-        const key = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
         di.register(key, {
             singleton: true
         });
@@ -285,7 +285,7 @@ describe("Di Test", () => {
     });
 
     it("Test register empty value for string singleton", () => {
-        const key = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
         di.register(key, {
             value: "",
             singleton: true
@@ -296,7 +296,7 @@ describe("Di Test", () => {
     });
 
     it("Test register undefined value for string non-singleton", () => {
-        const key = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
         di.register(key, {
             singleton: false
         });
@@ -306,7 +306,7 @@ describe("Di Test", () => {
     });
 
     it("Test register empty value for string non-singleton", () => {
-        const key = Utils.RandomString();
+        const key = Utils.Strings.RandomString();
         di.register(key, {
             value: "",
             singleton: false
