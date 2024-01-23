@@ -6,9 +6,22 @@ import { EnvironmentStrategy } from "./strategies";
 @Injectable()
 export class Configuration implements IConfiguration {
 
+  /**
+   * Configurations data from strategies
+   */
   private _configurationData: IConfigurationData[] = [];
+
+  /**
+   * Configuration strategies
+   */
   private _configurationStrategies: IConfigurationStrategy[] = [];
-    
+  
+  /**
+   * Method for construct instance
+   *
+   * @param _logger Logger for application
+   * @param environmentStrategy Default strategy for load env
+   */
   constructor(
     private readonly _logger: Logger,
     environmentStrategy: EnvironmentStrategy
@@ -17,19 +30,29 @@ export class Configuration implements IConfiguration {
     this._configurationStrategies.push(environmentStrategy);
   }
 
+  /**
+   * Add new strategy for configuration
+   *
+   * @param strategy Instance of strategy
+   * @returns void
+   */
   public addStrategy(strategy: IConfigurationStrategy): void {
     this._logger.debug("Add strategy", { strategy });
     this._configurationStrategies.push(strategy);
   }
 
+  /**
+   * Method for load configurations from strategies
+   * 
+   * @returns void
+   */
   public async load(): Promise<void> {
     this._logger.info("Try load strategies");
     this._logger.debug("List strategies", { strategies: this._configurationStrategies });
     await Promise.all(
       this._configurationStrategies.map(async configuration => {
         try {
-          const data = await configuration.load();
-          this._configurationData = [... this._configurationData, ... data];
+          this._configurationData = [... this._configurationData, ... await configuration.load()];
           this._logger.info("Success load strategy", { strategy: configuration });
           this._logger.debug("Strategy", { strategy: configuration });
         } catch (ex) {
@@ -40,6 +63,12 @@ export class Configuration implements IConfiguration {
     )
   }
 
+  /**
+   * Method for get key value
+   *
+   * @param key Key get value
+   * @returns Key value
+   */
   public get(key?: string): string {
     this._logger.debug("Try get value", { key });
     
@@ -53,6 +82,11 @@ export class Configuration implements IConfiguration {
     return null;
   }
 
+  /**
+   * Method to get all configurations
+   *
+   * @returns List of configurations
+   */
   public getData(): IConfigurationData[] {
     return this._configurationData;
   }

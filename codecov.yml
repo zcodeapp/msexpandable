@@ -3,7 +3,7 @@ flag_management:
     carryforward: true
     statuses:
       - type: project
-        target: auto
+        target: 90%
         threshold: 1%
       - type: patch
         target: 90%
@@ -11,49 +11,12 @@ flag_management:
     - name: logger
       paths: 
       - src/logger
-      carryforward: true
-      statuses:
-        - type: project
-          target: 20%
-        - type: patch
-          target: 100%
     - name: di
       paths: 
       - src/di
-      carryforward: true
-      statuses:
-        - type: project
-          target: 20%
-        - type: patch
-          target: 100%
     - name: utils
       paths: 
       - src/utils
-      carryforward: true
-      statuses:
-        - type: project
-          target: 20%
-        - type: patch
-          target: 100%
     - name: configuration
       paths: 
       - src/configuration
-      carryforward: true
-      statuses:
-        - type: project
-          target: 20%
-        - type: patch
-          target: 100%
-flags:
-  logger:
-    paths:
-      - src/logger/
-  di:
-    paths:
-      - src/di/
-  utils:
-    paths:
-      - src/utils/
-  configuration:
-    paths:
-      - src/configuration/
