@@ -1,6 +1,6 @@
 {
   "name": "@zcodeapp/di",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Dependency Injection",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -34,15 +34,15 @@
     "@types/reflect-metadata": "^0.1.0",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.16.0",
-    "@zcodeapp/interfaces": "^0.3.1",
-    "@zcodeapp/utils": "^0.2.3",
+    "@zcodeapp/interfaces": "^0.3.2",
+    "@zcodeapp/utils": "^0.2.4",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@zcodeapp/logger": "^0.2.3",
+    "@zcodeapp/logger": "^0.2.4",
     "crypto-js": "^4.2.0",
     "lodash.clonedeep": "^4.5.0",
     "reflect-metadata": "^0.2.1"
