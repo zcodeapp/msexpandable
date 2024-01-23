@@ -20,3 +20,6 @@ flag_management:
     - name: configuration
       paths: 
       - src/configuration
+    - name: cache
+      paths: 
+      - src/cache
