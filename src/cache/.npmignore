@@ -1,0 +1,7 @@
+.vscode/
+src/
+tests/
+.eslintignore
+.eslintrc.js
+jest.config.js
+tsconfig.json

@@ -69,7 +69,7 @@ export class Configuration implements IConfiguration {
    * @param key Key get value
    * @returns Key value
    */
-  public get(key?: string): string {
+  public get(key: string): string {
     this._logger.debug("Try get value", { key });
     
     const data = this._configurationData.find(x => x.key == key);
