@@ -1,6 +1,6 @@
 {
   "name": "@zcodeapp/configuration",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Configuration for load system variables",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -37,8 +37,8 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@zcodeapp/di": "^0.2.4",
-    "@zcodeapp/logger": "^0.2.4",
-    "@zcodeapp/utils": "^0.2.4"
+    "@zcodeapp/di": "^0.2.5",
+    "@zcodeapp/logger": "^0.2.5",
+    "@zcodeapp/utils": "^0.2.5"
   }
 }
