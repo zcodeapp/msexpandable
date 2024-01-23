@@ -1,6 +1,6 @@
 import { Di } from "@zcodeapp/di";
 import { ICache } from "@zcodeapp/interfaces";
-import { Logger, LoggerStrategyConsole } from "../../logger/dist";
+import { Logger, LoggerStrategyConsole } from "@zcodeapp/logger";
 import { Cache, MemoryStrategy } from "../src"
 import { Utils } from "@zcodeapp/utils";
 import { CacheTestStrategy } from "./mock/strategy";
