@@ -26,5 +26,12 @@ describe("Utils Test", () => {
         clone.name = "Changed";
         expect(original.name).toBe("Example");
         expect(clone.name).toBe("Changed");
+    });
+
+    it("Test md5", () => {
+        const key = "adec7ae2ad44db0d3152c5b02940a020";
+        const md5 = "8d06de6117c2aee4ef4f963451019b47";
+        const result = Utils.Transform.md5(key);
+        expect(result).toBe(md5);
     })
 })

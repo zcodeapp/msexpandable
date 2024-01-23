@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/zcodeapp/msexpandable#readme",
   "devDependencies": {
-    "@types/crypto-js": "^4.2.1",
     "@types/jest": "^29.5.11",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.16.0",
@@ -40,7 +39,6 @@
   "dependencies": {
     "@zcodeapp/di": "^0.2.4",
     "@zcodeapp/logger": "^0.2.4",
-    "@zcodeapp/utils": "^0.2.4",
-    "crypto-js": "^4.2.0"
+    "@zcodeapp/utils": "^0.2.4"
   }
 }

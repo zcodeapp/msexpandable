@@ -35,13 +35,16 @@ console.log(Utils.Strings.RandomString(100))
 
 Strings Class
 
-`RandomString(length: number = 10): string`
+`Utils.Strings.RandomString(length: number = 10): string`
 Generates a random string of the specified length. The default length is 10 characters.
 
 Transform Class
 
-`Clone<T, Y = T>(origin: T): Y`
+`Utils.Transform.Clone<T, Y = T>(origin: T): Y`
 Creates a deep clone of the provided object. This method is type-safe and can be used to clone complex objects and arrays.
+
+`Utils.Transform.md5(key: string): string`
+Returns a md5 of key value.
 
 ## Example
 
