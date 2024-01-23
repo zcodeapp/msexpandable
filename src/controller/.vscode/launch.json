@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Controller Debug",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "docker",
+      "localRoot": "${workspaceFolder}",
+      "attachSimplePort": 9229,
+      "remoteRoot": "/app/src/controller",
+      "runtimeArgs": [
+        "compose", "-f", "../../docker-compose.yml",
+        "run", "--rm",
+        "--workdir", "/app/src/controller",
+        "--publish", "9229:9229",
+        "test"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+    }
+  ]
+}

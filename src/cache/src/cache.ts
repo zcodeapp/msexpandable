@@ -30,6 +30,6 @@ export class Cache implements ICache {
   public async get(key: string): Promise<string> {
     key = Utils.Transform.md5(key);
     const data = await this._cacheStrategy.get(key);
-    return data ?? null;
+    return data;
   }
 }
