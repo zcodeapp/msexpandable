@@ -2,9 +2,13 @@ name: Utils CI
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'src/utils/**'
   pull_request:
+    branches:
+      - main
     paths:
       - 'src/utils/**'
 

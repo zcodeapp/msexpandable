@@ -2,9 +2,13 @@ name: Cache CI
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'src/cache/**'
   pull_request:
+    branches:
+      - main
     paths:
       - 'src/cache/**'
 

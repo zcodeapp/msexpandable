@@ -2,9 +2,13 @@ name: Logger CI
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'src/logger/**'
   pull_request:
+    branches:
+      - main
     paths:
       - 'src/logger/**'
 

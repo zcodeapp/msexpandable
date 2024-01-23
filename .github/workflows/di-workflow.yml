@@ -2,9 +2,13 @@ name: Di CI
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'src/di/**'
   pull_request:
+    branches:
+      - main
     paths:
       - 'src/di/**'
 

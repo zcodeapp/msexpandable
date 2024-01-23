@@ -2,9 +2,13 @@ name: Configuration CI
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'src/configuration/**'
   pull_request:
+    branches:
+      - main
     paths:
       - 'src/configuration/**'
 
