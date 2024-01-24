@@ -5,7 +5,7 @@ import { IControllerMiddleware } from "./IControllerMiddleware";
 
 export interface IControllerRouteOptions {
   path?: string,
-  method: EControllerMethod;
+  method?: EControllerMethod;
   middlewares?: TConstructor<IControllerMiddleware>[],
   interceptors?: TConstructor<IControllerInterceptor>[]
 }

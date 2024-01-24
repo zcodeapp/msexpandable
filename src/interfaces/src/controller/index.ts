@@ -6,3 +6,4 @@ export * from "./IController";
 export * from "./IControllerRoute";
 export * from "./IControllerRouteOptions";
 export * from "./EControllerMethod";
+export * from "./IControllerManager";

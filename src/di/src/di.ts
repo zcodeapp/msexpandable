@@ -52,6 +52,9 @@ export class Di implements IDi {
     private _options?: IDiConstructor
   ) {
     this._logger.addPrefix("[Di] ");
+    this.register(Di, {
+      factory: () => Di.getInstance()
+    });
   }
 
   /**
@@ -132,6 +135,7 @@ export class Di implements IDi {
    * @returns Instance or string|number|bool information
    */
   public get<T>(key: TConstructor<T> | string): T {
+
     try {
       this._logger.debug("Try get instance", { key });
 
@@ -165,6 +169,7 @@ export class Di implements IDi {
    * @returns 
    */
   private _findInstance<T>(key: TConstructor<T> | string): IDiInstance {
+
     const unique = this._getKey(key);
 
     this._logger.debug("Try find instance", { unique });

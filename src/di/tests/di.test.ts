@@ -26,6 +26,10 @@ describe("Di Test", () => {
             cleanSingleton: true
         });
         expect(di).toBeInstanceOf(Di)
+    });
+
+    it("Test di return self", () => {
+        expect(di.get(Di)).toBeInstanceOf(Di);
     })
 
     it("Test clean instance di", () => {
