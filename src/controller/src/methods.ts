@@ -1,19 +1,21 @@
 import { Di } from "@zcodeapp/di";
 import { ControllerManager } from "./controllerManager";
 import {
-  TConstructor,
-  IController,
+  // TConstructor,
+  // IController,
   IControllerRouteOptions,
-  EControllerMethod
+  EControllerMethod,
+  // TConstructor
 } from "@zcodeapp/interfaces";
 
-const di = Di.getInstance();
-const controllerManager = di.get(ControllerManager);
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function createMethodDecorator(method: EControllerMethod) {
-  return function(path?: string, options?: IControllerRouteOptions) {
-    return function(constructor: TConstructor<IController>, propertyName: string, descriptor: PropertyDescriptor) {
-      controllerManager.routes(constructor, propertyName, descriptor, { ...{ path: path ?? "/", method }, ...options ?? {} });
+  return function(_path?: string, _options?: IControllerRouteOptions, _a?: any, _b?: any) {
+    return function(constructor: any, propertyName: any, propertyDescriptor?: PropertyDescriptor) {
+      const di = Di.getInstance();
+      const controllerManager = di.get(ControllerManager);
+      controllerManager.register(constructor.constructor);
+      controllerManager.routes(constructor.constructor, propertyName, propertyDescriptor, { ...{ path: _path ?? "/", method }, ..._options ?? {} });
     };
   }
 }

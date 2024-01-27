@@ -55,6 +55,9 @@ export class Di implements IDi {
     this.register(Di, {
       factory: () => Di.getInstance()
     });
+    this.register(Logger, {
+      factory: () => this._logger
+    });
   }
 
   /**
@@ -179,8 +182,9 @@ export class Di implements IDi {
     
     this._logger.debug("Success find instance", { instance, index });
 
-    if (index < 0 || !instance)
+    if (index < 0 || !instance) {
       throw new Error(`Instance not found [${key.toString()}]`);
+    }
     
     return instance;
   }
