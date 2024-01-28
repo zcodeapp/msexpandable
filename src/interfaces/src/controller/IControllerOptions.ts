@@ -4,6 +4,6 @@ import { IControllerInterceptor, IControllerMiddleware } from ".";
 export interface IControllerOptions {
   path?: string;
   useControllerRoute?: boolean,
-  middleware?: TConstructor<IControllerMiddleware>[];
+  middlewares?: TConstructor<IControllerMiddleware>[];
   interceptors?: TConstructor<IControllerInterceptor>[]
 }

@@ -1,0 +1,50 @@
+name: Controller CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/controller/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/controller/**'
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Remove package.json root
+      run: rm package.json package-lock.json
+      working-directory: ./
+
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./src/controller
+
+    - name: Run Build
+      run: npm run build
+      working-directory: ./src/controller
+
+    - name: Run Tests and Collect Coverage
+      run: npm run test-ci
+      working-directory: ./src/controller
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./src/controller/coverage/coverage-final.json
+        flags: controller
+        name: controller
+        fail_ci_if_error: true
+        verbose: true
+

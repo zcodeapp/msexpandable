@@ -23,3 +23,6 @@ flag_management:
     - name: cache
       paths: 
       - src/cache
+    - name: controller
+      paths: 
+      - src/controller

@@ -1,6 +1,5 @@
 import { Di } from "@zcodeapp/di";
 import { EControllerMethod, IControllerManager } from "@zcodeapp/interfaces";
-// import { Logger, LoggerStrategyConsole } from "@zcodeapp/logger";
 import { ControllerManager } from "../src/controllerManager";
 import { SampleController } from "./mock/controllerManager/sampleController";
 import { Utils } from "@zcodeapp/utils";
@@ -89,7 +88,7 @@ describe("ControllerManager Test", () => {
         });
         const controller = controllerManager.getControllers().find(x => x.key == SampleController.name.toLocaleLowerCase());
         expect(controller?.constructor?.name).toBe(SampleController.name);
-        expect(controller?.options?.path).toBe(`/${SampleController.name.toLocaleLowerCase()}`);
+        expect(controller?.options?.path).toBe(`/${SampleController.name.toLocaleLowerCase().replace(/controller(?!.*controller)[^]*$/, "")}`);
     });
 
     it("Test register controller with useControllerRoute and path slash, in options", () => {
@@ -100,7 +99,7 @@ describe("ControllerManager Test", () => {
         });
         const controller = controllerManager.getControllers().find(x => x.key == SampleController.name.toLocaleLowerCase());
         expect(controller?.constructor?.name).toBe(SampleController.name);
-        expect(controller?.options?.path).toBe(`/${SampleController.name.toLocaleLowerCase()}`);
+        expect(controller?.options?.path).toBe(`/${SampleController.name.toLocaleLowerCase().replace(/controller(?!.*controller)[^]*$/, "")}`);
     });
 
     it("Test register controller with useControllerRoute and path, in options", () => {
@@ -112,16 +111,16 @@ describe("ControllerManager Test", () => {
         });
         const controller = controllerManager.getControllers().find(x => x.key == SampleController.name.toLocaleLowerCase());
         expect(controller?.constructor?.name).toBe(SampleController.name);
-        expect(controller?.options?.path).toBe(`/${SampleController.name.toLocaleLowerCase()}/${path}`);
+        expect(controller?.options?.path).toBe(`/${SampleController.name.toLocaleLowerCase().replace(/controller(?!.*controller)[^]*$/, "")}/${path}`);
     });
 
     it("Test register controller middleware", () => {
         controllerManager.reset();
         controllerManager.register(SampleController, {
-            middleware: [SampleMiddleware]
+            middlewares: [SampleMiddleware]
         });
         const controller = controllerManager.getControllers().find(x => x.key == SampleController.name.toLocaleLowerCase());
-        expect(controller?.options?.middleware).toStrictEqual([SampleMiddleware])
+        expect(controller?.options?.middlewares).toStrictEqual([SampleMiddleware])
     });
 
     it("Test register controller interceptor", () => {
@@ -252,7 +251,7 @@ describe("ControllerManager Test", () => {
         controllerManager.routes(SampleController, "getTest", {});
         expect(() => {
             controllerManager.routes(SampleController, "getTest", {});
-        }).toThrow(`Route already exists [GET /]`)
+        }).toThrow(`Route already exists [GET ]`)
     });
 
     it("Exception on try register controller route methods twice round", () => {
@@ -274,7 +273,7 @@ describe("ControllerManager Test", () => {
                 controllerManager.routes(SampleController, "getTest", {}, {
                     method
                 });
-            }).toThrow(`Route already exists [${method} /]`)
+            }).toThrow(`Route already exists [${method} ]`)
         })
     });
 

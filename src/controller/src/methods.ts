@@ -10,7 +10,7 @@ import {
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function createMethodDecorator(method: EControllerMethod) {
-  return function(_path?: string, _options?: IControllerRouteOptions, _a?: any, _b?: any) {
+  return function(_path?: string, _options?: IControllerRouteOptions) {
     return function(constructor: any, propertyName: any, propertyDescriptor?: PropertyDescriptor) {
       const di = Di.getInstance();
       const controllerManager = di.get(ControllerManager);
