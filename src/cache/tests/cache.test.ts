@@ -1,6 +1,5 @@
 import { Di } from "@zcodeapp/di";
 import { ICache } from "@zcodeapp/interfaces";
-import { Logger, LoggerStrategyConsole } from "@zcodeapp/logger";
 import { Cache, MemoryStrategy } from "../src"
 import { Utils } from "@zcodeapp/utils";
 import { CacheTestStrategy } from "./mock/strategy";
@@ -9,14 +8,6 @@ describe("Cache Test", () => {
 
   const di = Di.getInstance();
   let cache: ICache;
-
-  di.register(Logger, {
-    factory: () => {
-      return new Logger({
-        strategy: new LoggerStrategyConsole()
-      });
-    }
-  });
 
   beforeEach(() => {
     cache = di.get(Cache);
