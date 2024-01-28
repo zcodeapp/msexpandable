@@ -8,8 +8,10 @@ import {
     ExampleSimpleInjectableSingleton,
     ExampleMultiInjectableSingleton,
     ExampleMultiInjectableNonSingleton,
-    ExampleComplexInjectableNotFoundSingleton
+    ExampleComplexInjectableNotFoundSingleton,
+    ExampleInjectDiLogger
 } from "./mocks/injectable"
+import { Logger } from "@zcodeapp/logger";
 
 describe("Di Injectable Test", () => {
     
@@ -18,6 +20,12 @@ describe("Di Injectable Test", () => {
     beforeEach(() => {
         di = Di.getInstance();
     });
+
+    it("Test di and logger instance register", () => {
+        const instance = di.get(ExampleInjectDiLogger);
+        expect(instance.getDi()).toBeInstanceOf(Di);
+        expect(instance.getLogger()).toBeInstanceOf(Logger);
+    })
 
     it("Test auto detect string/number dependencies ExampleSimpleInjectable singleton", () => {
         const instance = di.get(ExampleSimpleInjectable);

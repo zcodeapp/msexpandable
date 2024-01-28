@@ -7,3 +7,4 @@ export * from "./ExampleMultiInjectableSingleton";
 export * from "./ExampleMultiInjectableNonSingleton";
 export * from "./ExampleComplexInjectableNotFoundSingleton";
 export * from "./ExampleComplexInjectableNotInjected";
+export * from "./ExampleInjectDiLogger";
