@@ -1,6 +1,6 @@
 {
   "name": "@zcodeapp/utils",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Utils for reuse code",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,7 +33,7 @@
     "@types/jest": "^29.5.11",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.16.0",
-    "@zcodeapp/interfaces": "^0.3.2",
+    "@zcodeapp/interfaces": "^0.4.0",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.1",
