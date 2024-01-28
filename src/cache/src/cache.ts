@@ -32,7 +32,7 @@ export class Cache implements ICache {
    * @param strategy Instance of strategy
    */
   public changeStrategy(strategy: ICacheStrategy): void {
-    this._logger.debug("Add strategy", { strategy });
+    this._logger.debug("Change strategy", { strategy });
     this._cacheStrategy = strategy;
   }
 

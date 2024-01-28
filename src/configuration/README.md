@@ -36,11 +36,14 @@ npm install @zcodeapp/configuration @zcodeapp/logger
 To use the `Configuration` class in your TypeScript project:
 
 ```typescript
-import { Configuration, EnvironmentStrategy } from "@zcodeapp/configuration";
-import { Logger } from "@zcodeapp/logger";
+import { Di } from "@zcodeapp/di";
+import { ExampleStrategy } from "exampleStrategy";
+import { Configuration } from "@zcodeapp/configuration";
 
-// Get env values
-const config = new Configuration(Logger.getInstance(), new EnvironmentStrategy());
+const di = Di.getInstance();
+
+const config = di.get(Configuration);
+
 const node_env = config.get("NODE_ENV");
 ```
 
@@ -91,6 +94,7 @@ import { Injectable } from "@zcodeapp/di";
 export class ExampleStrategy implements IConfigurationStrategy {
   public async load(): Promise<IConfigurationData[]> {
     // load github, azure, gcp ...
+    // return IConfigurationData[]
   }
 }
 ```
@@ -100,22 +104,13 @@ main.ts
 import { Di } from "@zcodeapp/di";
 import { ExampleStrategy } from "exampleStrategy";
 import { Configuration } from "@zcodeapp/configuration";
-import { Logger, LoggerStrategyConsole } from "@zcodeapp/logger";
 
 const di = Di.getInstance();
 
-di.register(Logger, {
-  factory: () => {
-    return new Logger({
-      strategy: new LoggerStrategyConsole()
-    });
-  }
-});
-
-// Get env values
 const config = di.get(Configuration);
-di.addStrategy(di.get(ExampleStrategy));
-const node_env = config.get("NODE_ENV");
+config.addStrategy(di.get(ExampleStrategy));
+
+const custom_value = config.get("CUSTOM_VALUE");
 ```
 
 ## License

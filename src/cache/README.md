@@ -33,6 +33,18 @@ npm install @zcodeapp/cache
 
 ## Usage
 
+```typescript
+import { Di } from '@zcodeapp/di';
+import { Cache } from '@zcodeapp/cache';
+
+const di = Di.getInstance();
+const cache = di.get(Cache);
+
+await cache.set('myKey', 'myValue');
+
+const value = await cache.get('myKey');
+```
+
 ## API Reference
 
 `Cache Class`
@@ -49,12 +61,32 @@ npm install @zcodeapp/cache
 
 ## Example
 
+exampleStrategy.ts
+```typescript
+import { Injectable } from "@zcodeapp/di";
+import { ICacheStrategy } from "@zcodeapp/interfaces";
+
+@Injectable()
+export class ExampleStrategy implements ICacheStrategy {
+    public async set(key: string, value: string): Promise<void> {
+      // your code...
+    }
+
+    public async get(key: string): Promise<string> {
+      // your code...
+    }
+}
+```
+
+main.ts
 ```typescript
 import { Di } from '@zcodeapp/di';
 import { Cache } from '@zcodeapp/cache';
+import { ExampleStrategy } from 'exampleStrategy';
 
 const di = Di.getInstance();
 const cache = di.get(Cache);
+cache.changeStrategy(di.get(ExampleStrategy));
 
 await cache.set('myKey', 'myValue');
 
