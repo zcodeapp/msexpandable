@@ -84,6 +84,8 @@ export class ControllerManager implements IControllerManager {
       propertyName,
       path,
       method,
+      summary: options?.summary ?? "",
+      responses: options?.responses ?? [],
       middlewares: [...options?.middlewares ?? []],
       interceptors: [...options?.interceptors ?? []],
     });

@@ -1,7 +1,7 @@
 {
-  "name": "@zcodeapp/controller",
-  "version": "0.1.1",
-  "description": "Controller for application",
+  "name": "@zcodeapp/http-request",
+  "version": "0.0.2",
+  "description": "HTTP Request for HTTP Server",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "publishConfig": {
@@ -18,7 +18,8 @@
     "url": "git+git@github.com:zcodeapp/msexpandable.git"
   },
   "keywords": [
-    "controller"
+    "http",
+    "request"
   ],
   "author": "Joao Moraes <joaomoraesbr@gmail.com>",
   "license": "ISC",
@@ -38,7 +39,6 @@
   },
   "dependencies": {
     "@zcodeapp/di": "^0.3.0",
-    "@zcodeapp/http-request": "^0.0.2",
     "@zcodeapp/logger": "^0.2.6",
     "@zcodeapp/utils": "^0.2.6"
   }

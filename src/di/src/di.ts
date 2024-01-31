@@ -137,28 +137,28 @@ export class Di implements IDi {
    * @param key Identification dependency
    * @returns Instance or string|number|bool information
    */
-  public get<T>(key: TConstructor<T> | string): T {
+  public get<T>(key: TConstructor<T> | string, providers?: { [K in keyof TConstructor<any> | string]: () => K }): T {
 
     try {
-      this._logger.debug("Try get instance", { key });
+      this._logger.debug("Try get instance", { key, providers });
 
       const instance = this._findInstance(key);
 
-      if (instance.instance) {
+      if (instance.instance && !providers) {
         this._logger.debug("Return singleton instance");
         return instance.instance;
       }
 
-      const providers = this._getInstanceProviders(instance);
+      const _providers = this._getInstanceProviders(instance);
 
-      if (instance.singleton) {
-        instance.instance = this._getInstance(instance, providers);
+      if (instance.singleton && !providers) {
+        instance.instance = this._getInstance(instance, _providers);
         this._logger.debug("Return singleton instance");
         return instance.instance;
       }
 
       this._logger.debug("Return non-singleton instance");
-      return this._getInstance(instance, providers);
+      return this._getInstance(instance, _providers);
     } catch (ex) {
       this._logger.fatal("Fatal error on try get instance", { key, ex });
       throw ex;
