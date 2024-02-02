@@ -38,7 +38,6 @@
   },
   "dependencies": {
     "@zcodeapp/di": "^0.3.0",
-    "@zcodeapp/http-request": "^0.0.2",
     "@zcodeapp/logger": "^0.2.6",
     "@zcodeapp/utils": "^0.2.6"
   }

@@ -8,3 +8,5 @@ export * from "./IControllerRouteOptions";
 export * from "./EControllerMethod";
 export * from "./IControllerManager";
 export * from "./IControllerOptionResponse";
+export * from "./IControllerInjectParams";
+export * from "./EControllerInjectParam";
