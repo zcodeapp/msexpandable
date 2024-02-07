@@ -6,7 +6,9 @@ import {
   IDiInstance,
   IDiOptions,
   IDiConstructor,
-  ILogger
+  ILogger,
+  IDiGetOptions,
+  IDiGetOptionsProviders
 } from "@zcodeapp/interfaces";
 import { Logger } from "@zcodeapp/logger";
 
@@ -137,28 +139,33 @@ export class Di implements IDi {
    * @param key Identification dependency
    * @returns Instance or string|number|bool information
    */
-  public get<T>(key: TConstructor<T> | string, providers?: { [K in keyof TConstructor<any> | string]: () => K }): T {
+  public get<T>(key: TConstructor<T> | string, options?: IDiGetOptions): T {
 
     try {
-      this._logger.debug("Try get instance", { key, providers });
+
+      options = { ... {
+        providers: []
+      }, ... options ?? {} };
+
+      this._logger.debug("Try get instance", { key, options });
 
       const instance = this._findInstance(key);
 
-      if (instance.instance && !providers) {
+      if (instance.instance && options.providers.length == 0) {
         this._logger.debug("Return singleton instance");
         return instance.instance;
       }
 
       const _providers = this._getInstanceProviders(instance);
 
-      if (instance.singleton && !providers) {
+      if (instance.singleton && options.providers.length == 0) {
         instance.instance = this._getInstance(instance, _providers);
         this._logger.debug("Return singleton instance");
         return instance.instance;
       }
 
       this._logger.debug("Return non-singleton instance");
-      return this._getInstance(instance, _providers);
+      return this._getInstance(instance, _providers, options.providers);
     } catch (ex) {
       this._logger.fatal("Fatal error on try get instance", { key, ex });
       throw ex;
@@ -269,7 +276,7 @@ export class Di implements IDi {
    * @param providers Providers of instance constructor
    * @returns Instance or string|number|bool
    */
-  private _getInstance(instance: IDiInstance, providers?: any[]) {
+  private _getInstance(instance: IDiInstance, providers?: any[], getProviders?: IDiGetOptionsProviders[]) {
     if (instance.factory && typeof instance.factory == "function") {
       this._logger.debug("Return factory", { instance });
       return instance.factory();
@@ -286,7 +293,7 @@ export class Di implements IDi {
     
     if (typeof instance.key == "function") {
       this._logger.debug("Return function value", { providers, instanceProviders: instance.providers });
-      return new instance.key(...this._providers(providers.length > 0 ? providers : instance.providers));
+      return new instance.key(...this._providers(providers.length > 0 ? providers : instance.providers, getProviders));
     }
   }
 
@@ -296,9 +303,15 @@ export class Di implements IDi {
    * @param providers List of providers
    * @returns Provider value
    */
-  private _providers(providers: any[]) {
+  private _providers(providers: any[], getProviders?: IDiGetOptionsProviders[]) {
     this._logger.debug("Return providers for construct", { providers });
     return providers.map(provider => {
+      
+      const _provider = getProviders.find(x => x.class == provider);
+      
+      if (_provider)
+        return _provider.factory();
+      
       try {
         this._logger.debug("Try return from get method");
         return this.get(provider);

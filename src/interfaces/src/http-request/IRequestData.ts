@@ -6,8 +6,8 @@ import { IRequestQuery } from "./IRequestQuery";
 export interface IRequestData<B> {
   url: string,
   originalUrl: string,
-  method: string,
-  headers: IRequestHeader[],
+  method?: string,
+  headers?: IRequestHeader[],
   cookies?: IRequestCookie[],
   body?: B,
   params?: IRequestParam[],

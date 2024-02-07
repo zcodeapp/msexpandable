@@ -39,13 +39,13 @@ export class ControllerManager implements IControllerManager {
       const index = this._controllers.findIndex(x => x.key == key);
       this._controllers[index] = {
         key,
-        constructor,
+        constructor: constructor as TConstructor<IController>,
         options: {...options, ...{ path: pathOption, middlewares: options?.middlewares ?? [], interceptors: options?.interceptors ?? [] }}
       }
     } else {
       this._controllers.push({
         key,
-        constructor,
+        constructor: constructor as TConstructor<IController>,
         options: {...options, ...{ path: pathOption, middlewares: options?.middlewares ?? [], interceptors: options?.interceptors ?? [] }}
       });
     }

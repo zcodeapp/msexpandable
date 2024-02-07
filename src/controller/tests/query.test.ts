@@ -1,7 +1,7 @@
 import { Di } from "@zcodeapp/di";
-import { EControllerMethod, IControllerManager } from "@zcodeapp/interfaces";
-import { ControllerManager } from "../src";
-import { QuerySampleController } from "./mock/query/QuerySampleController"
+import { EControllerMethod, ERequestStatus, IController, IControllerManager } from "@zcodeapp/interfaces";
+import { ControllerManager, ControllerRequest, ControllerResponse } from "../src";
+import { QueryReturnJsonController } from "./mock/query/QueryReturnJsonController"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 describe("Test Query", () => {
@@ -13,24 +13,39 @@ describe("Test Query", () => {
       controllerManager = di.get(ControllerManager);
   });
 
-  it("Test Query with sample QuerySampleController", () => {
-    const controller = controllerManager.getControllers().find(x => x.key == QuerySampleController.name.toLocaleLowerCase());
-    const methods = controllerManager.getRoutes();
-    const method = methods.find(x => {
-      return x.key == QuerySampleController.name.toLocaleLowerCase()
-        && x.method == EControllerMethod.GET
+  it("Test Query return JSON QueryReturnJsonController", () => {
+
+    const request = di.get(ControllerRequest);
+    const response = di.get(ControllerResponse);
+
+    request.populate({
+      originalUrl: "",
+      url: "",
+      method: EControllerMethod.GET,
+      query: QueryReturnJsonController.getQuery()
     });
 
-    const _controller = di.get<any>(String(controller?.key))
+    const instanceController = di.get<IController>(QueryReturnJsonController, {
+      providers: [
+        {
+          class: ControllerRequest,
+          factory: () => request
+        },
+        {
+          class: ControllerResponse,
+          factory: () => response
+        }
+      ]
+    });
 
-    console.log("execute init")
-    const execution = _controller.callMethod("get")
-    console.log("execute end")
+    const resultMethod = instanceController.callMethod("get");
 
-    console.log({
-      _controller,
-      method,
-      execution
-    })
+    const [ partner, country ] = QueryReturnJsonController.getQuery();
+
+    expect(resultMethod.statusCode).toBe(ERequestStatus.OK);
+    expect(resultMethod.json).toBeTruthy();
+    expect(resultMethod.body.partner).toBe(partner.value);
+    expect(resultMethod.body.country).toBe(country.value);
+    expect(resultMethod.body.query).toStrictEqual(QueryReturnJsonController.getQuery());
   })
 });

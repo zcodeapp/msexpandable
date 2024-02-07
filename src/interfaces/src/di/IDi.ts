@@ -1,4 +1,4 @@
-import { IDiConstructor, IDiOptions, TConstructor } from "."
+import { IDiConstructor, IDiGetOptions, IDiOptions, TConstructor } from "."
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IDi {
@@ -32,5 +32,5 @@ export interface IDi {
    * @param key Identification dependency
    * @returns Instance or string|number|bool information
    */
-  get<T>(key: TConstructor<T> | string): T
+  get<T>(key: TConstructor<T> | string, options?: IDiGetOptions): T
 }
