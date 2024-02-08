@@ -1,22 +1,16 @@
 import { Di } from "@zcodeapp/di";
-import { EControllerMethod, ERequestStatus, IController, IControllerManager } from "@zcodeapp/interfaces";
-import { ControllerManager, ControllerRequest, ControllerResponse } from "../src";
+import { EControllerMethod, ERequestStatus, IController } from "@zcodeapp/interfaces";
+import { ControllerRequest } from "../src";
 import { QueryReturnJsonController } from "./mock/query/QueryReturnJsonController"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 describe("Test Query", () => {
 
   const di = Di.getInstance();
-  let controllerManager: IControllerManager;
-
-  beforeEach(() => {
-      controllerManager = di.get(ControllerManager);
-  });
 
   it("Test Query return JSON QueryReturnJsonController", () => {
 
     const request = di.get(ControllerRequest);
-    const response = di.get(ControllerResponse);
 
     request.populate({
       originalUrl: "",
@@ -30,10 +24,6 @@ describe("Test Query", () => {
         {
           class: ControllerRequest,
           factory: () => request
-        },
-        {
-          class: ControllerResponse,
-          factory: () => response
         }
       ]
     });
@@ -47,5 +37,15 @@ describe("Test Query", () => {
     expect(resultMethod.body.partner).toBe(partner.value);
     expect(resultMethod.body.country).toBe(country.value);
     expect(resultMethod.body.query).toStrictEqual(QueryReturnJsonController.getQuery());
-  })
+  });
+
+  it("Test Query with no query-data return JSON QueryReturnJsonController", () => {
+    const instanceController = di.get<IController>(QueryReturnJsonController);
+
+    const resultMethod = instanceController.callMethod("get");
+
+    expect(resultMethod.statusCode).toBe(ERequestStatus.OK);
+    expect(resultMethod.json).toBeTruthy();
+    expect(resultMethod.body.query).toBeUndefined()
+  });
 });

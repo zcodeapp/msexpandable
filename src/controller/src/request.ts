@@ -12,7 +12,7 @@ export class ControllerRequest<B = any> implements IRequest<B> {
   }
 
   public getMethod(): string {
-    return this._data.method;
+    return this._data?.method;
   }
 
   public getUrl(): string {
@@ -24,22 +24,22 @@ export class ControllerRequest<B = any> implements IRequest<B> {
   }
 
   public getHeaders(): IRequestHeader[] {
-    return this._data.headers;
+    return this._data?.headers;
   }
 
   public getCookies(): IRequestCookie[] {
-    return this._data.cookies;
+    return this._data?.cookies;
   }
 
   public getBody(): B {
-    return this._data.body;
+    return this._data?.body;
   }
 
   public getParams(): IRequestParam[] {
-    return this._data.params;
+    return this._data?.params;
   }
 
   public getQuery(): IRequestQuery[] {
-    return this._data.query;
+    return this._data?.query;
   }
 }

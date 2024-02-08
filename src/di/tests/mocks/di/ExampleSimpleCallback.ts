@@ -9,4 +9,8 @@ export class ExampleSimpleCallback {
   public getContent() {
     return this._content;
   }
+
+  public setContent(content: string) {
+    this._content = content;
+  }
 }

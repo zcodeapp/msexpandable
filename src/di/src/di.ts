@@ -307,7 +307,16 @@ export class Di implements IDi {
     this._logger.debug("Return providers for construct", { providers });
     return providers.map(provider => {
       
-      const _provider = getProviders.find(x => x.class == provider);
+      const _provider = getProviders && getProviders.find(x => {
+        if (typeof x.class == "string")
+          return x.class == provider;
+
+        let providerName = provider.name;
+        if (provider.constructor.name != "Function")
+          providerName = provider.constructor.name
+         
+        return x.class.name == providerName;
+      });
       
       if (_provider)
         return _provider.factory();

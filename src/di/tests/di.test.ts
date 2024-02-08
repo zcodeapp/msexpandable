@@ -1,7 +1,8 @@
 import { IDi } from "@zcodeapp/interfaces";
 import { Utils } from "@zcodeapp/utils";
 import { Di } from "../src"
-import { ExampleSimpleString, ExampleSimpleCallback, ExampleSimpleCallbackInject } from "./mocks/di"
+import { ExampleSimpleString, ExampleSimpleCallbackInject } from "./mocks/di"
+import { ExampleSimpleCallback } from "./mocks/di/ExampleSimpleCallback"
 import { Logger } from "@zcodeapp/logger";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -318,5 +319,47 @@ describe("Di Test", () => {
         expect(() => {
             di.get(key)
         }).toThrow(`Configuration not have value [${key}]`);
+    });
+
+    it("Test get using local providers", () => {
+
+        const firstContent = Utils.Strings.RandomString();
+
+        di.register(ExampleSimpleCallback, {
+            singleton: true,
+            providers: [() => firstContent]
+        });
+        di.register(ExampleSimpleCallbackInject, {
+            singleton: true,
+            providers: [ExampleSimpleCallback]
+        });
+
+        const instance1 = di.get(ExampleSimpleCallbackInject);
+        const instance2 = di.get(ExampleSimpleCallbackInject);
+        const result1 = instance1.getClass().getContent();
+        const result2 = instance2.getClass().getContent();
+
+        const newContent = Utils.Strings.RandomString();
+
+        const instance3 = di.get(ExampleSimpleCallbackInject, {
+            providers: [
+                {
+                    class: ExampleSimpleCallback,
+                    factory: () => new ExampleSimpleCallback(() => newContent)
+                }
+            ]
+        });
+        const result3 = instance3.getClass().getContent();
+
+        const instance4 = di.get(ExampleSimpleCallbackInject);
+        const instance5 = di.get(ExampleSimpleCallbackInject);
+        const result4 = instance4.getClass().getContent();
+        const result5 = instance5.getClass().getContent();
+
+        expect(result1).toBe(firstContent);
+        expect(result2).toBe(firstContent);
+        expect(result3).toBe(newContent);
+        expect(result4).toBe(firstContent);
+        expect(result5).toBe(firstContent);
     });
 })

@@ -1,6 +1,7 @@
 import { EControllerInjectParam, IController, IControllerInjectParams, IResponseData } from "@zcodeapp/interfaces";
 import { ControllerRequest } from "./request";
 import { ControllerResponse } from "./response";
+import "reflect-metadata";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export abstract class BaseController implements IController {
@@ -21,16 +22,19 @@ export abstract class BaseController implements IController {
     params.sort((a, b) => a.index - b.index);
 
     const args: any[] = [];
-    params.map(query => {
-      if(query.param == EControllerInjectParam.QUERY) {
-        if (query?.value)
-          return args.push(queryParams.find(x => x.name == query.value)?.value);
+    params.map(param => {
+      if(param.param == EControllerInjectParam.QUERY) {
+        if (!queryParams)
+          return args.push(undefined);
+
+        if (queryParams && param?.value)
+          return args.push(queryParams.find(x => x.name == param.value)?.value);
   
         return args.push(queryParams);
       }
-      if(query.param == EControllerInjectParam.BODY) {
-        if (query?.value)
-          return args.push(body[query.value]);
+      if(param.param == EControllerInjectParam.BODY) {
+        if (param?.value)
+          return args.push(body[param.value]);
   
         return args.push(body);
       }
