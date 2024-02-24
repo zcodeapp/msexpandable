@@ -1,8 +1,8 @@
 import { IController } from "@zcodeapp/interfaces";
-import { Controller, Get, Post, Put, Delete, Patch, Options, Head } from "../../../src";
+import { Controller, Get, Post, Put, Delete, Patch, Options, Head, BaseController } from "../../../src";
 
 @Controller("/routePath")
-export class RoutePathMethodsController implements IController {
+export class RoutePathMethodsController extends BaseController implements IController {
 
   @Get("/get")
   public get() {}

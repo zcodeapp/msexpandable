@@ -1,5 +1,6 @@
 import { IController } from "@zcodeapp/interfaces";
+import { BaseController } from "../../../src";
 
-export class SampleController implements IController {
+export class SampleController extends BaseController implements IController {
 
 }

@@ -1,9 +1,9 @@
 import { IController } from "@zcodeapp/interfaces";
-import { Controller, Get, Post, Put, Delete, Patch, Options, Head } from "../../../src";
+import { Controller, Get, Post, Put, Delete, Patch, Options, Head, BaseController } from "../../../src";
 import { InterceptorRouteDependency } from "./InterceptorRouteDependency";
 
 @Controller()
-export class InterceptorRouteEmptyController implements IController {
+export class InterceptorRouteEmptyController extends BaseController implements IController {
 
   @Get("/", {
     interceptors: [InterceptorRouteDependency]

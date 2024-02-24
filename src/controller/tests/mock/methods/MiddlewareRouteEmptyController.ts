@@ -1,9 +1,9 @@
 import { IController } from "@zcodeapp/interfaces";
-import { Controller, Get, Post, Put, Delete, Patch, Options, Head } from "../../../src";
+import { Controller, Get, Post, Put, Delete, Patch, Options, Head, BaseController } from "../../../src";
 import { MiddlewareRouteDependency } from "./MiddlewareRouteDependency";
 
 @Controller()
-export class MiddlewareRouteEmptyController implements IController {
+export class MiddlewareRouteEmptyController extends BaseController implements IController {
 
   @Get("/", {
     middlewares: [MiddlewareRouteDependency]

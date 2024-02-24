@@ -1,8 +1,8 @@
 import { ERequestStatus, IController } from "@zcodeapp/interfaces";
-import { Controller, Get, Post, Put, Delete, Patch, Options, Head } from "../../../src";
+import { Controller, Get, Post, Put, Delete, Patch, Options, Head, BaseController } from "../../../src";
 
 @Controller()
-export class ResponseStatusRouteController implements IController {
+export class ResponseStatusRouteController extends BaseController implements IController {
   @Get("/", {
     responses: [
       {

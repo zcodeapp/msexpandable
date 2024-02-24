@@ -11,7 +11,8 @@
     "test": "npm run build && node --inspect=0.0.0.0:9229 -r ts-node/register /app/node_modules/jest/bin/jest.js tests --runInBand",
     "test-ci": "npx jest --coverage --runInBand",
     "build": "rm -rf dist && tsc && npm run eslint",
-    "eslint": "eslint --ext .ts ."
+    "eslint": "eslint --ext .ts .",
+    "publish": "npx lerna publish"
   },
   "repository": {
     "type": "git",

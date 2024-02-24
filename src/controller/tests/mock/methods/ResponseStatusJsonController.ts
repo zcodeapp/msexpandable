@@ -1,5 +1,5 @@
 import { ERequestStatus, IController } from "@zcodeapp/interfaces";
-import { Controller } from "../../../src";
+import { BaseController, Controller } from "../../../src";
 
 @Controller("/", {
   responses: [
@@ -8,6 +8,6 @@ import { Controller } from "../../../src";
     }
   ]
 })
-export class ResponseStatusJsonController implements IController {
+export class ResponseStatusJsonController extends BaseController implements IController {
 
 }
