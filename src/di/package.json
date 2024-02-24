@@ -33,7 +33,7 @@
     "@types/jest": "^29.5.11",
     "@types/reflect-metadata": "^0.1.0",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
-    "@typescript-eslint/parser": "^6.16.0",
+    "@typescript-eslint/parser": "^7.0.2",
     "@zcodeapp/interfaces": "^0.5.0",
     "@zcodeapp/utils": "^0.3.0",
     "eslint": "^8.56.0",
