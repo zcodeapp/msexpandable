@@ -48,4 +48,8 @@ describe("Test Query", () => {
     expect(resultMethod.json).toBeTruthy();
     expect(resultMethod.body.query).toBeUndefined()
   });
+
+  it("Test query validation for all fields", () => {
+    
+  })
 });

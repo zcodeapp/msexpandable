@@ -1,4 +1,3 @@
 #!/bin/bash
 
-# bin/docker/host/install
-bin/docker/host/docker-run
+docker compose run --rm client $@

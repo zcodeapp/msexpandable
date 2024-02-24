@@ -10,3 +10,5 @@ export * from "./IControllerManager";
 export * from "./IControllerOptionResponse";
 export * from "./IControllerInjectParams";
 export * from "./EControllerInjectParam";
+export * from "./IParamsOptions";
+export * from "./IControllerResponseData";

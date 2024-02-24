@@ -1,19 +1,19 @@
 {
-  "version": "0.2.0",
+  "version": "0.0.1",
   "configurations": [
     {
-      "name": "HTTP Request Debug",
+      "name": "Validation Debug",
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "docker",
       "localRoot": "${workspaceFolder}",
       "attachSimplePort": 9229,
-      "remoteRoot": "/app/src/http-request",
+      "remoteRoot": "/app/src/validation",
       "runtimeArgs": [
         "compose", "-f", "../../docker-compose.yml",
         "run", "--rm",
-        "--workdir", "/app/src/http-request",
+        "--workdir", "/app/src/validation",
         "--publish", "9229:9229",
         "test"
       ],
