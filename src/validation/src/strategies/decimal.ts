@@ -3,8 +3,7 @@ import { IValidationResult, IValidationRules, IValidationStrategy } from "@zcode
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 @Injectable({ singleton: true })
-export class UuidStrategy implements IValidationStrategy {
-
+export class DecimalStrategy implements IValidationStrategy {
   public handle(rule: IValidationRules, value: any): IValidationResult {
 
     const result: IValidationResult = {
@@ -12,15 +11,19 @@ export class UuidStrategy implements IValidationStrategy {
       errors: []
     };
 
-    if (typeof value != "string")
+    if (typeof value != "number" || isNaN(value) || value < rule.min || value > rule.max)
       return result;
 
-    const regex: RegExp = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
-
+    if(rule?.decimal) {
+      const rawNumber = value.toString().split(".");
+      if (rawNumber.length != 2 || rawNumber[1].length > rule.decimal)
+        return result;
+    }
+      
     return {
-      ...result,
+      ... result,
       ... {
-        success: regex.test(value)
+        success: true
       }
     };
   }

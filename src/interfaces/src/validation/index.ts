@@ -6,3 +6,7 @@ export * from "./IValidationError";
 export * from "./IValidationCheckResult";
 export * from "./IValidationMapTypes";
 export * from "./IValidationStrategy";
+export * from "./IValidationGenerate";
+export * from "./IValidationParse";
+export * from "./EValidationMap";
+export * from "./IValidationResult";

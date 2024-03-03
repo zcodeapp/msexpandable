@@ -1,47 +1,118 @@
 import { Di } from "@zcodeapp/di";
 import { IValidation } from "@zcodeapp/interfaces";
-import { Utils } from "@zcodeapp/utils";
 import { Validation } from "../src";
-import { SampleDefaultValues } from "./isUuid/SampleDefaultValues";
-import { SampleInvalidType } from "./isUuid/SampleInvalidType";
-import { SampleMessagesDefault } from "./isUuid/SampleMessagesDefault";
-import { SampleMessages } from "./isUuid/SampleMessages";
+import { SampleDefaultValues } from "./isDate/SampleDefaultValues";
+import { SampleStringValue } from "./isDate/SampleStringValue";
+import { SampleInvalidType } from "./isDate/SampleInvalidType";
+import { Utils } from "@zcodeapp/utils";
+import { SampleMessagesDefault } from "./isDate/SampleMessagesDefault";
+import { SampleMessages } from "./isDate/SampleMessages";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-describe("Test IsUuid decorator", () => {
+describe("Test IsDate decorator", () => {
 
   const di = Di.getInstance();
   const validation = di.get<IValidation>(Validation);
 
   describe("Test for default and valid values using SampleDefaultValues", () => {
     it("Test valid default value validation", () => {
-      const uuid = Utils.Strings.Uuid();
+      const date = Di.getInstance().get(Date);
       const sampleDefaultValues = di.get(SampleDefaultValues);
-      sampleDefaultValues.default = uuid
+      sampleDefaultValues.default = date
       expect(validation.check(sampleDefaultValues).errors).toStrictEqual([]);
-      expect(sampleDefaultValues.default).toBe(uuid);
+      expect(sampleDefaultValues.default).toBe(date);
     });
     it("Test valid default not apply generate value validation", () => {
-      const uuid = Utils.Strings.Uuid();
+      const date = Di.getInstance().get(Date);
       const sampleDefaultValues = di.get(SampleDefaultValues);
-      sampleDefaultValues.nonGenerate = uuid
+      sampleDefaultValues.nonGenerate = date
       expect(validation.check(sampleDefaultValues).errors).toStrictEqual([]);
-      expect(sampleDefaultValues.nonGenerate).toBe(uuid);
+      expect(sampleDefaultValues.nonGenerate).toBe(date);
     });
     it("Test valid default generate required value validation", () => {
       const sampleDefaultValues = di.get(SampleDefaultValues);
       expect(validation.check(sampleDefaultValues).errors).toStrictEqual([]);
-      expect(sampleDefaultValues.generate).toMatch(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/)
+      expect(sampleDefaultValues.generate).toBeInstanceOf(Date);
+      expect(sampleDefaultValues.generate.toISOString()).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})?$/)
     });
     it("Test valid default generate non-required value validation", () => {
       const sampleDefaultValues = di.get(SampleDefaultValues);
       expect(validation.check(sampleDefaultValues).errors).toStrictEqual([]);
-      expect(sampleDefaultValues.generateNonRequired).toMatch(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/)
+      expect(sampleDefaultValues.generate.toISOString()).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})?$/)
     });
     it("Test valid default generate using boolean value validation", () => {
       const sampleDefaultValues = di.get(SampleDefaultValues);
       expect(validation.check(sampleDefaultValues).errors).toStrictEqual([]);
-      expect(sampleDefaultValues.generateBoolean).toMatch(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/)
+      expect(sampleDefaultValues.generateBoolean.toISOString()).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})?$/)
+    });
+  });
+
+  describe("Test using string date", () => {
+    it("Test valid string", () => {
+      const date = "2020-03-01T16:04:16.298Z";
+      const sampleDefaultValues = di.get(SampleStringValue);
+      sampleDefaultValues.dateString = date as any;
+      expect(validation.check(sampleDefaultValues).errors).toStrictEqual([]);
+      expect(sampleDefaultValues.dateString).toStrictEqual(new Date(date));
+      expect(sampleDefaultValues.dateString).not.toBe(date);
+    });
+    it("Test valid string format, no Z", () => {
+      const date = "2020-10-01T16:04:16.298";
+      const sampleDefaultValues = di.get(SampleStringValue);
+      sampleDefaultValues.dateString = date as any;
+      validation.check(sampleDefaultValues);
+      expect(sampleDefaultValues.dateString.toISOString()).toBe(`${date}Z`);
+    });
+    it("Test valid string format, no milliseconds", () => {
+      const date = "2020-10-01T16:04:10";
+      const sampleDefaultValues = di.get(SampleStringValue);
+      sampleDefaultValues.dateString = date as any;
+      validation.check(sampleDefaultValues);
+      expect(sampleDefaultValues.dateString.toISOString()).toBe(`${date}.000Z`);
+    });
+    it("Test invalid string day", () => {
+      const date = "2020-02-50T16:04:16.298Z";
+      const sampleDefaultValues = di.get(SampleStringValue);
+      sampleDefaultValues.dateString = date as any;
+      expect(validation.check(sampleDefaultValues).errors).toStrictEqual([{
+        message: "Class have invalid value",
+        constructor: "SampleStringValue",
+        propertyName: "dateString",
+        value: sampleDefaultValues.dateString
+      }]);
+    });
+    it("Test invalid string month", () => {
+      const date = "2020-13-01T16:04:16.298Z";
+      const sampleDefaultValues = di.get(SampleStringValue);
+      sampleDefaultValues.dateString = date as any;
+      expect(validation.check(sampleDefaultValues).errors).toStrictEqual([{
+        message: "Class have invalid value",
+        constructor: "SampleStringValue",
+        propertyName: "dateString",
+        value: sampleDefaultValues.dateString
+      }]);
+    });
+    it("Test invalid string year", () => {
+      const date = "20-10-01T16:04:16.298Z";
+      const sampleDefaultValues = di.get(SampleStringValue);
+      sampleDefaultValues.dateString = date as any;
+      expect(validation.check(sampleDefaultValues).errors).toStrictEqual([{
+        message: "Class have invalid value",
+        constructor: "SampleStringValue",
+        propertyName: "dateString",
+        value: sampleDefaultValues.dateString
+      }]);
+    });
+    it("Test invalid string format, no T", () => {
+      const date = "2020-10-01 16:04:16.298Z";
+      const sampleDefaultValues = di.get(SampleStringValue);
+      sampleDefaultValues.dateString = date as any;
+      expect(validation.check(sampleDefaultValues).errors).toStrictEqual([{
+        message: "Class have invalid value",
+        constructor: "SampleStringValue",
+        propertyName: "dateString",
+        value: sampleDefaultValues.dateString
+      }]);
     });
   });
 
@@ -71,7 +142,7 @@ describe("Test IsUuid decorator", () => {
   
       it("Test invalid message for uuid non required", () => {
         const sampleMessagesDefault = di.get(SampleMessagesDefault);
-        sampleMessagesDefault._empty = Utils.Strings.Uuid();
+        sampleMessagesDefault._empty = new Date();
         sampleMessagesDefault._invalid1 = 50;
         expect(validation.check(sampleMessagesDefault).errors).toStrictEqual([{
           message: "Class have invalid value",
@@ -81,9 +152,9 @@ describe("Test IsUuid decorator", () => {
         }]);
       });
   
-      it("Test invalid message for int invalid non required", () => {
+      it("Test invalid message for invalid non required", () => {
         const sampleMessagesDefault = di.get(SampleMessagesDefault);
-        sampleMessagesDefault._empty = Utils.Strings.Uuid();
+        sampleMessagesDefault._empty = new Date();
         sampleMessagesDefault._invalid2 = Utils.Strings.RandomString();
         expect(validation.check(sampleMessagesDefault).errors).toStrictEqual([{
           message: "Class have invalid value",
@@ -107,10 +178,10 @@ describe("Test IsUuid decorator", () => {
   
       it("Test invalid message for int/string non required", () => {
         const sampleMessages = di.get(SampleMessages);
-        sampleMessages._empty = Utils.Strings.Uuid();
+        sampleMessages._empty = new Date();
         sampleMessages._invalid1 = 50;
         expect(validation.check(sampleMessages).errors).toStrictEqual([{
-          message: "Invalid uuid message",
+          message: "Invalid date message",
           constructor: "SampleMessages",
           propertyName: "_invalid1",
           value: sampleMessages._invalid1
@@ -119,7 +190,7 @@ describe("Test IsUuid decorator", () => {
   
       it("Test invalid message for int invalid non required", () => {
         const sampleMessages = di.get(SampleMessages);
-        sampleMessages._empty = Utils.Strings.Uuid();
+        sampleMessages._empty = new Date();
         sampleMessages._invalid2 = Utils.Strings.RandomString();
         expect(validation.check(sampleMessages).errors).toStrictEqual([{
           message: "Invalid content message",
@@ -129,5 +200,4 @@ describe("Test IsUuid decorator", () => {
         }]);
       });
   });
-
 });

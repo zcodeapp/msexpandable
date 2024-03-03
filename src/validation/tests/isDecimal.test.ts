@@ -1,16 +1,15 @@
 import { Di } from "@zcodeapp/di";
-import { SampleDefaultValues } from "./isNumber/SampleDefaultValues";
 import { Validation } from "../src/validation";
 import { IValidation } from "@zcodeapp/interfaces";
 import { Utils } from "@zcodeapp/utils";
-import { SampleMinMaxValues } from "./isNumber/SampleMinMaxValues";
-import { SampleMinMaxParams } from "./isNumber/SampleMinMaxParams";
-import { SampleInvalidType } from "./isNumber/SampleInvalidType";
-import { SampleMessages } from "./isNumber/SampleMessages";
-import { SampleMessagesDefault } from "./isNumber/SampleMessagesDefault";
-import { SampleRegex } from "./isNumber/SampleRegex";
+import { SampleDefaultValues } from "./isDecimal/SampleDefaultValues";
+import { SampleInvalidType } from "./isDecimal/SampleInvalidType";
+import { SampleMinMaxValues } from "./isDecimal/SampleMinMaxValues";
+import { SampleMinMaxParams } from "./isDecimal/SampleMinMaxParams";
+import { SampleMessagesDefault } from "./isDecimal/SampleMessagesDefault";
+import { SampleMessages } from "./isDecimal/SampleMessages";
 
-describe("Test IsNumber decorator", () => {
+describe("Test IsDecimal decorator", () => {
 
   const di = Di.getInstance();
   const validation = di.get<IValidation>(Validation);
@@ -18,7 +17,8 @@ describe("Test IsNumber decorator", () => {
   describe("Test for default values using SampleDefaultValues", () => {
     it("Test valid default min/max value validation", () => {
       const sampleDefaultValues = di.get(SampleDefaultValues);
-      sampleDefaultValues.default = Utils.Numbers.RandomNumber(2);
+      sampleDefaultValues.valueDefault = Utils.Numbers.RandomDecimal(2);
+      sampleDefaultValues.valueDecimal = Utils.Numbers.RandomDecimal(2, 2);
       expect(validation.check(sampleDefaultValues).errors).toStrictEqual([]);
     });
   
@@ -29,23 +29,34 @@ describe("Test IsNumber decorator", () => {
   
     it("Test invalid default min value validation", () => {
       const sampleDefaultValues = di.get(SampleDefaultValues);
-      sampleDefaultValues.default = -1;
+      sampleDefaultValues.valueDefault = -1;
       expect(validation.check(sampleDefaultValues).errors).toStrictEqual([{
         message: "Class have invalid value",
         constructor: "SampleDefaultValues",
-        propertyName: "default",
-        value: sampleDefaultValues.default
+        propertyName: "valueDefault",
+        value: sampleDefaultValues.valueDefault
       }]);
     });
   
     it("Test invalid default max value validation", () => {
       const sampleDefaultValues = di.get(SampleDefaultValues);
-      sampleDefaultValues.default = 256;
+      sampleDefaultValues.valueDefault = 256;
       expect(validation.check(sampleDefaultValues).errors).toStrictEqual([{
         message: "Class have invalid value",
         constructor: "SampleDefaultValues",
-        propertyName: "default",
-        value: sampleDefaultValues.default
+        propertyName: "valueDefault",
+        value: sampleDefaultValues.valueDefault
+      }]);
+    });
+
+    it("Test invalid decimal size", () => {
+      const sampleDefaultValues = di.get(SampleDefaultValues);
+      sampleDefaultValues.valueDecimal = Utils.Numbers.RandomDecimal(2, 5);
+      expect(validation.check(sampleDefaultValues).errors).toStrictEqual([{
+        message: "Class have invalid value",
+        constructor: "SampleDefaultValues",
+        propertyName: "valueDecimal",
+        value: sampleDefaultValues.valueDecimal
       }]);
     });
   });
@@ -67,29 +78,40 @@ describe("Test IsNumber decorator", () => {
 
     it("Test valid min/max value validation", () => {
       const sampleMinMaxValues = di.get(SampleMinMaxValues);
-      sampleMinMaxValues.default = 5;
+      sampleMinMaxValues.valueDefault = 5;
       expect(validation.check(sampleMinMaxValues).errors).toStrictEqual([]);
     });
 
     it("Test invalid min value validation", () => {
       const sampleMinMaxValues = di.get(SampleMinMaxValues);
-      sampleMinMaxValues.default = 2;
+      sampleMinMaxValues.valueDefault = 2;
       expect(validation.check(sampleMinMaxValues).errors).toStrictEqual([{
         message: "Class have invalid value",
         constructor: "SampleMinMaxValues",
-        propertyName: "default",
-        value: sampleMinMaxValues.default
+        propertyName: "valueDefault",
+        value: sampleMinMaxValues.valueDefault
       }]);
     });
 
     it("Test invalid max value validation", () => {
       const sampleMinMaxValues = di.get(SampleMinMaxValues);
-      sampleMinMaxValues.default = 50;
+      sampleMinMaxValues.valueDefault = 50;
       expect(validation.check(sampleMinMaxValues).errors).toStrictEqual([{
         message: "Class have invalid value",
         constructor: "SampleMinMaxValues",
-        propertyName: "default",
-        value: sampleMinMaxValues.default
+        propertyName: "valueDefault",
+        value: sampleMinMaxValues.valueDefault
+      }]);
+    });
+
+    it("Test invalid decimal size", () => {
+      const sampleDefaultValues = di.get(SampleDefaultValues);
+      sampleDefaultValues.valueDecimal = 5.12582;
+      expect(validation.check(sampleDefaultValues).errors).toStrictEqual([{
+        message: "Class have invalid value",
+        constructor: "SampleDefaultValues",
+        propertyName: "valueDecimal",
+        value: sampleDefaultValues.valueDecimal
       }]);
     });
   });
@@ -212,26 +234,6 @@ describe("Test IsNumber decorator", () => {
         constructor: "SampleMessages",
         propertyName: "_invalid2",
         value: sampleMessages._invalid2
-      }]);
-    });
-  });
-
-  describe("Test regex for values using SampleRegex", () => {
-
-    it("Test regex with valid value", () => {
-      const sampleRegex = di.get(SampleRegex);
-      sampleRegex.default = 99;
-      expect(validation.check(sampleRegex).errors).toStrictEqual([]);
-    });
-
-    it("Test regex with invalid value", () => {
-      const sampleRegex = di.get(SampleRegex);
-      sampleRegex.default = 999;
-      expect(validation.check(sampleRegex).errors).toStrictEqual([{
-        message: "Class have invalid value",
-        constructor: "SampleRegex",
-        propertyName: "default",
-        value: sampleRegex.default
       }]);
     });
   });

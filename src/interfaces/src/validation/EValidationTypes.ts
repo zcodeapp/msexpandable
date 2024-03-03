@@ -2,5 +2,8 @@ export enum EValidationTypes {
   NUMBER,
   STRING,
   BOOLEAN,
-  UUID
+  UUID,
+  DATE,
+  DECIMAL,
+  HAVE_ONE
 }

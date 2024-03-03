@@ -1,13 +1,24 @@
 import { Injectable } from "@zcodeapp/di";
-import { IValidationRules, IValidationStrategy } from "@zcodeapp/interfaces";
+import { IValidationResult, IValidationRules, IValidationStrategy } from "@zcodeapp/interfaces";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 @Injectable({ singleton: true })
 export class BooleanStrategy implements IValidationStrategy {
-  public handle(rule: IValidationRules, value: any): boolean {
+  public handle(rule: IValidationRules, value: any): IValidationResult {
+
+    const result: IValidationResult = {
+      success: false,
+      errors: []
+    };
+
     if (typeof value != "boolean") {
-      return false;
+      return result;
     }
-    return true;
+    return {
+      ... result,
+      ... {
+        success: true
+      }
+    };
   }
 }

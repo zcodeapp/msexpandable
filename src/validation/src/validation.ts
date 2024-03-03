@@ -1,6 +1,8 @@
-import { Injectable } from "@zcodeapp/di";
+import "reflect-metadata";
+import { Di, Injectable } from "@zcodeapp/di";
 import { Logger } from "@zcodeapp/logger";
 import {
+  EValidationMap,
   EValidationTypes,
   IValidation,
   IValidationCheckResult,
@@ -13,6 +15,12 @@ import { NumberStrategy } from "./strategies/number";
 import { StringStrategy } from "./strategies/string";
 import { BooleanStrategy } from "./strategies/boolean";
 import { UuidStrategy } from "./strategies/uuid";
+import { UuidGenerate } from "./generate/uuid";
+import { DateStrategy } from "./strategies/date";
+import { DateGenerate } from "./generate/date";
+import { DateParse } from "./parser/date";
+import { DecimalStrategy } from "./strategies/decimal";
+import { HaveOneStrategy } from "./strategies/haveOne";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-case-declarations */
@@ -22,23 +30,15 @@ export class Validation implements IValidation {
   /**
    * Strategies for validation
    */
-  private readonly _strategies: IValidationMapTypes[] = [
-    {
-      type: EValidationTypes.NUMBER,
-      callback: this._numberStrategy.handle
-    },
-    {
-      type: EValidationTypes.STRING,
-      callback: this._stringStrategy.handle
-    },
-    {
-      type: EValidationTypes.BOOLEAN,
-      callback: this._booleanStrategy.handle
-    },
-    {
-      type: EValidationTypes.UUID,
-      callback: this._uuidStrategy.handle
-    }
+  private readonly _strategies = [
+    // TYPE                     STRATEGY          GENERATE          PARSE
+    [EValidationTypes.NUMBER,   NumberStrategy                                ],
+    [EValidationTypes.DECIMAL,  DecimalStrategy,                              ],
+    [EValidationTypes.STRING,   StringStrategy                                ],
+    [EValidationTypes.BOOLEAN,  BooleanStrategy                               ],
+    [EValidationTypes.UUID,     UuidStrategy,     UuidGenerate                ],
+    [EValidationTypes.DATE,     DateStrategy,     DateGenerate,     DateParse ],
+    [EValidationTypes.HAVE_ONE, HaveOneStrategy                                 ]
   ];
 
   /**
@@ -49,17 +49,11 @@ export class Validation implements IValidation {
   /**
    * Method for construct instance of Validation
    *
-   * @param _numberStrategy Number strategy
-   * @param _stringStrategy String strategy
-   * @param _booleanStrategy Boolean strategy
-   * @param _uuidStrategy Uuid strategy
+   * @param _di Instance of Di
    * @param _logger Instance of Logger
    */
   constructor(
-    private readonly _numberStrategy: NumberStrategy,
-    private readonly _stringStrategy: StringStrategy,
-    private readonly _booleanStrategy: BooleanStrategy,
-    private readonly _uuidStrategy: UuidStrategy,
+    private readonly _di: Di,
     private readonly _logger: Logger
   ){
     this._logger.addPrefix("[Validation]");
@@ -71,7 +65,7 @@ export class Validation implements IValidation {
    * @param type Type of value
    * @param options Options for validate
    */
-  public register(type: EValidationTypes, options: IValidationOptions) {
+  public register(type: EValidationTypes, options: IValidationOptions): void {
     this._logger.debug("Register constructor/property validation", {
       type,
       options
@@ -79,8 +73,19 @@ export class Validation implements IValidation {
     this._rules.push({
       ... options,
       type,
-      constructor: options.constructor.constructor.name
+      constructor: options.constructor.constructor.name,
+      signature: Reflect.getMetadata("design:type", options.constructor, options.propertyName)
     });
+  }
+
+  /**
+   * Method for get if exists validation
+   *
+   * @param constructor Contructor for test exists
+   * @returns 
+   */
+  public exists(constructor: any): IValidationRules {
+    return this._rules.find(x => x.constructor == (constructor.prototype.constructor?.name ?? constructor.constructor.name));
   }
 
   /**
@@ -104,26 +109,44 @@ export class Validation implements IValidation {
     });
 
     if (rules.length > 0) {
-      rules.map(rule => {
-        const value = constructor[rule.propertyName];
+      rules.forEach(rule => {
+        let value = constructor[rule.propertyName];
 
         this._logger.debug("Value property", {
           constructor,
           value
         });
 
-        if (value == undefined) {
+        if ((value == undefined || String(value) == "") && !rule.generate) {
           if (rule.required) {
             errors.push(this._error(rule, rule.errors?.empty ?? "Class have property required without value", value));
           }
         } else {
-          this._strategies.map(strategy => {
+          this._strategies.map((_strategy: any) => {
+            const strategy: IValidationMapTypes = {
+              type: _strategy[EValidationMap.TYPE],
+              callback: this._di.get<any>(_strategy[EValidationMap.STRATEGY]).handle,
+              generate: _strategy[EValidationMap.GENERATE] && this._di.get<any>(_strategy[EValidationMap.GENERATE])?.handle,
+              parse: _strategy[EValidationMap.PARSE] && this._di.get<any>(_strategy[EValidationMap.PARSE])?.handle
+            };
             if (strategy.type == rule.type) {
-              if(!strategy.callback(rule, value)) {
-                errors.push(this._error(rule, rule.errors?.invalid ?? "Class have invalid value", value));
+              if (strategy.parse)
+                value = constructor[rule.propertyName] = strategy.parse(rule, value)
+
+              if (strategy.generate && rule.generate)
+                value = constructor[rule.propertyName] = strategy.generate(rule, value)
+  
+              const resultCallback = strategy.callback(rule, value);
+
+              if(resultCallback.errors && resultCallback.errors.length > 0) {
+                resultCallback.errors.map(error => errors.push(error))
+              } else {
+                if (!resultCallback.success) {
+                  errors.push(this._error(rule, rule.errors?.invalid ?? "Class have invalid value", value));
+                }
               }
             }
-          })
+          });
         }
       });
 

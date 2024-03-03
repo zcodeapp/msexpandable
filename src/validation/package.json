@@ -41,6 +41,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@zcodeapp/logger": "^0.2.7"
+    "@zcodeapp/logger": "^0.2.7",
+    "reflect-metadata": "^0.2.1"
   }
 }

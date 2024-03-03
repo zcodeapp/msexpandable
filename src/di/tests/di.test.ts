@@ -33,6 +33,10 @@ describe("Di Test", () => {
         expect(di.get(Di)).toBeInstanceOf(Di);
     })
 
+    it("Test di return Date", () => {
+        expect(di.get(Date)).toBeInstanceOf(Date);
+    })
+
     it("Test clean instance di", () => {
         const key = Utils.Strings.RandomString();
         const value = Utils.Strings.RandomString();

@@ -8,7 +8,7 @@ import { SampleMessagesDefault } from "./isBoolean/SampleMessagesDefault";
 import { SampleMessages } from "./isBoolean/SampleMessages";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-describe("Test IsString decorator", () => {
+describe("Test IsBoolean decorator", () => {
 
   const di = Di.getInstance();
   const validation = di.get<IValidation>(Validation);

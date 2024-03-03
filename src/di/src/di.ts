@@ -60,6 +60,9 @@ export class Di implements IDi {
     this.register(Logger, {
       factory: () => this._logger
     });
+    this.register(Date, {
+      factory: () => new Date()
+    });
   }
 
   /**
