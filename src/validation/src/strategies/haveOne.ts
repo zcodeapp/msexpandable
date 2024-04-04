@@ -17,27 +17,25 @@ export class HaveOneStrategy implements IValidationStrategy {
       errors: []
     };
 
-    if (rule.required && (value == undefined || value == null || String(value) == "{}"))
+    if (rule.required && (value == null || String(value) == "{}"))
       return result;
     
-    if (value != undefined && value != null && String(value) != "{}") {
-      const validation = Di.getInstance().get<IValidation>(Validation);
-      let { errors } = validation.check(value);
-      if (errors && errors.length > 0) {
+    const validation = Di.getInstance().get<IValidation>(Validation);
+    let { errors } = validation.check(value);
+    if (errors && errors.length > 0) {
 
-        errors = errors.map(error => {
-          error.constructor = rule.constructor;
-          error.propertyName = `${rule.propertyName}.${error.propertyName}`;
-          return error;
-        });
+      errors = errors.map(error => {
+        error.constructor = rule.constructor;
+        error.propertyName = `${rule.propertyName}.${error.propertyName}`;
+        return error;
+      });
 
-        return {
-          ...result,
-          ...{
-            errors
-          }
-        };
-      }
+      return {
+        ...result,
+        ...{
+          errors
+        }
+      };
     }
     return {
       ...result,
