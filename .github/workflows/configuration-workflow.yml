@@ -35,7 +35,7 @@ jobs:
       working-directory: ./src/configuration
 
     - name: Jest Location
-      run: npx jest
+      run: which npx
       working-directory: ./src/configuration
 
     - name: Upload Artifacts
