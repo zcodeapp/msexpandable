@@ -38,7 +38,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-artifacts
-        path: ./src/configuration
+        path: |
+        ./src/configuration
+        !./src/configuration/node_modules
 
   test:
     name: Test
