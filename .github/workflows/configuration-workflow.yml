@@ -27,15 +27,11 @@ jobs:
       working-directory: ./
 
     - name: Install Dependencies
-      run: npm install
+      run: npm install --prefix .
       working-directory: ./src/configuration
 
     - name: Run Build
       run: npm run build
-      working-directory: ./src/configuration
-
-    - name: Jest Location
-      run: which npx
       working-directory: ./src/configuration
 
     - name: Upload Artifacts
