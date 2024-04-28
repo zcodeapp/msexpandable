@@ -65,7 +65,7 @@ jobs:
       working-directory: ./src/configuration
 
     - name: Run Tests
-      run: npm run test-ci
+      run: npx jest --coverage --runInBand
       working-directory: ./src/configuration
 
   codecov:
