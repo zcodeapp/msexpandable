@@ -54,15 +54,15 @@ jobs:
       run: rm package.json package-lock.json
       working-directory: ./
 
-    - name: Install Dependencies
-      run: npm install
-      working-directory: ./src/configuration
-
     - name: Reuse Built Files
       uses: actions/download-artifact@v4
       with:
         name: build-artifacts
         path: ./src/configuration
+
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./src/configuration
 
     - name: Run Tests
       run: npm run test-ci
