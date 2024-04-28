@@ -50,6 +50,10 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
+    - name: Remove package.json root
+      run: rm package.json package-lock.json
+      working-directory: ./
+
     - name: Reuse Built Files
       uses: actions/download-artifact@v4
       with:
@@ -59,6 +63,12 @@ jobs:
     - name: Run Tests
       run: npm run test-ci
       working-directory: ./src/configuration
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-artifacts
+        path: ./src/configuration
 
   codecov:
     name: Codecov
@@ -70,10 +80,14 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
+    - name: Remove package.json root
+      run: rm package.json package-lock.json
+      working-directory: ./
+
     - name: Reuse Built Files
       uses: actions/download-artifact@v2
       with:
-        name: build-artifacts
+        name: test-artifacts
         path: ./src/configuration
 
     - name: Upload coverage reports to Codecov
