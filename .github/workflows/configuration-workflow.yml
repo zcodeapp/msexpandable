@@ -38,7 +38,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-artifacts
-        path: ./src/configuration
+        path: |
+          ./src/configuration
+          ./node_modules
 
   test:
     name: Test
@@ -54,7 +56,9 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: build-artifacts
-        path: ./src/configuration
+        path: |
+          ./src/configuration
+          ./node_modules
 
     - name: Run Tests
       run: npm run test-ci
@@ -74,7 +78,9 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
-        path: ./src/configuration
+        path: |
+          ./src/configuration
+          ./node_modules
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4
