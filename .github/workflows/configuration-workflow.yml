@@ -40,7 +40,7 @@ jobs:
         name: build-artifacts
         path: |
           ./src/configuration
-          ./node_modules
+          ./src/configuration/node_modules
 
   test:
     name: Test
@@ -58,7 +58,7 @@ jobs:
         name: build-artifacts
         path: |
           ./src/configuration
-          ./node_modules
+          ./src/configuration/node_modules
 
     - name: Run Tests
       run: npm run test-ci
@@ -80,7 +80,7 @@ jobs:
         name: build-artifacts
         path: |
           ./src/configuration
-          ./node_modules
+          ./src/configuration/node_modules
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4
