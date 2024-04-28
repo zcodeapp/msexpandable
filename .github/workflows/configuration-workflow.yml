@@ -38,9 +38,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-artifacts
-        path: |
-        ./src/configuration
-        !./src/configuration/node_modules
+        path: ./src/configuration
 
   test:
     name: Test
@@ -62,12 +60,8 @@ jobs:
         name: build-artifacts
         path: ./src/configuration
 
-    - name: Install Dependencies
-      run: npm install
-      working-directory: ./src/configuration
-
     - name: Run Tests
-      run: npm run test-ci
+      run: npm config set unsafe-perm true && npm run test-ci
       working-directory: ./src/configuration
 
     - name: Upload Artifacts
