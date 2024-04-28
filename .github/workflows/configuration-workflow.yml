@@ -35,7 +35,7 @@ jobs:
       working-directory: ./src/configuration
 
     - name: Jest Location
-      run: which npx
+      run: which npx && chmod +x -R node_modules/.bin
       working-directory: ./src/configuration
 
     - name: Upload Artifacts
@@ -61,7 +61,7 @@ jobs:
         path: ./src/configuration
 
     - name: Print Working Directory
-      run: pwd && ls -la node_modules
+      run: pwd && echo 'NODE' && ls -la node_modules && echo 'ROOT' && ls -la .
       working-directory: ./src/configuration
 
     - name: Run Tests
