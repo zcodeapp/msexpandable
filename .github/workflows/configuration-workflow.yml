@@ -34,10 +34,6 @@ jobs:
       run: npm run build
       working-directory: ./src/configuration
 
-    - name: Jest Location
-      run: which npx && chmod +x -R node_modules/.bin
-      working-directory: ./src/configuration
-
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -60,12 +56,8 @@ jobs:
         name: build-artifacts
         path: ./src/configuration
 
-    - name: Print Working Directory
-      run: pwd && ls -la node_modules/.bin && echo 'JEST' &&  && ls -la node_modules/jest
-      working-directory: ./src/configuration
-
     - name: Run Tests
-      run: node -r ts-node/register /app/node_modules/jest/bin/jest.js tests --coverage --runInBand
+      run: node -r ts-node/register ./node_modules/jest/bin/jest.js tests --coverage --runInBand
       working-directory: ./src/configuration
 
   codecov:
