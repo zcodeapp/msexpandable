@@ -61,11 +61,11 @@ jobs:
         path: ./src/configuration
 
     - name: Print Working Directory
-      run: pwd && echo 'NODE' && ls -la node_modules && echo 'ROOT' && ls -la .
+      run: pwd && ls -la node_modules/.bin && echo 'JEST' &&  && ls -la node_modules/jest
       working-directory: ./src/configuration
 
     - name: Run Tests
-      run: npx jest --coverage --runInBand
+      run: node -r ts-node/register /app/node_modules/jest/bin/jest.js tests --coverage --runInBand
       working-directory: ./src/configuration
 
   codecov:
