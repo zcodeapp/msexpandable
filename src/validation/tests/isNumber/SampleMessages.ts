@@ -1,28 +1,27 @@
-import { Injectable } from "@zcodeapp/di";
-import { IsNumber } from "../../src";
+import { Injectable } from '@zcodeapp/di'
+import { IsNumber } from '../../src'
 
 @Injectable({ singleton: false })
 export class SampleMessages {
-
   @IsNumber({
     required: true,
     errors: {
-      empty: "Empty message"
+      empty: 'Empty message'
     }
   })
-  public _empty: number;
+  public _empty: number
 
   @IsNumber({
     errors: {
-      invalid: "Invalid string message"
+      invalid: 'Invalid string message'
     }
   })
-  public _invalid1: string;
+  public _invalid1: string
 
   @IsNumber({
     errors: {
-      invalid: "Invalid content message"
+      invalid: 'Invalid content message'
     }
   })
-  public _invalid2: number;
+  public _invalid2: number
 }

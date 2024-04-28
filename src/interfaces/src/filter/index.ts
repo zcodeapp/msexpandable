@@ -1,1 +1,1 @@
-export * from "./IFilterRules";
+export * from './IFilterRules'

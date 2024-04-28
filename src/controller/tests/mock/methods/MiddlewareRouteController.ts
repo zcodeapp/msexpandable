@@ -1,44 +1,56 @@
-import { IController } from "@zcodeapp/interfaces";
-import { Controller, Get, Post, Put, Delete, Patch, Options, Head, BaseController } from "../../../src";
-import { MiddlewareRouteDependency } from "./MiddlewareRouteDependency";
-import { MiddlewareDependency } from "./MiddlewareDependency";
+import { IController } from '@zcodeapp/interfaces'
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Patch,
+  Options,
+  Head,
+  BaseController
+} from '../../../src'
+import { MiddlewareRouteDependency } from './MiddlewareRouteDependency'
+import { MiddlewareDependency } from './MiddlewareDependency'
 
-@Controller("/", {
+@Controller('/', {
   middlewares: [MiddlewareDependency]
 })
-export class MiddlewareRouteController extends BaseController implements IController {
-
-  @Get("/", {
+export class MiddlewareRouteController
+  extends BaseController
+  implements IController
+{
+  @Get('/', {
     middlewares: [MiddlewareRouteDependency]
   })
   public get() {}
 
-  @Post("/", {
+  @Post('/', {
     middlewares: [MiddlewareRouteDependency]
   })
   public post() {}
 
-  @Put("/", {
+  @Put('/', {
     middlewares: [MiddlewareRouteDependency]
   })
   public put() {}
 
-  @Delete("/", {
+  @Delete('/', {
     middlewares: [MiddlewareRouteDependency]
   })
   public delete() {}
 
-  @Patch("/", {
+  @Patch('/', {
     middlewares: [MiddlewareRouteDependency]
   })
   public patch() {}
 
-  @Options("/", {
+  @Options('/', {
     middlewares: [MiddlewareRouteDependency]
   })
   public options() {}
 
-  @Head("/", {
+  @Head('/', {
     middlewares: [MiddlewareRouteDependency]
   })
   public head() {}

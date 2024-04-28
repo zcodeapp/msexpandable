@@ -1,3 +1,1 @@
-export interface IControllerInterceptor {
-    
-}
+export interface IControllerInterceptor {}

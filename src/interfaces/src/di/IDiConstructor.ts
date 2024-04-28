@@ -1,7 +1,7 @@
-import { ILogger } from "..";
+import { ILogger } from '..'
 
 export interface IDiConstructor {
-    restrictRewriteKey?: boolean,
-    cleanSingleton?: boolean,
-    logger?: ILogger
+  restrictRewriteKey?: boolean
+  cleanSingleton?: boolean
+  logger?: ILogger
 }

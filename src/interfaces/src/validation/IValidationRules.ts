@@ -1,8 +1,8 @@
-import { EValidationTypes } from "./EValidationTypes";
-import { IValidationOptions } from "./IValidationOptions";
+import { EValidationTypes } from './EValidationTypes'
+import { IValidationOptions } from './IValidationOptions'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IValidationRules extends IValidationOptions {
-  type: EValidationTypes;
+  type: EValidationTypes
   signature?: any
 }

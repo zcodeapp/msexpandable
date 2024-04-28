@@ -1,41 +1,53 @@
-import { IController } from "@zcodeapp/interfaces";
-import { Controller, Get, Post, Put, Delete, Patch, Options, Head, BaseController } from "../../../src";
-import { InterceptorRouteDependency } from "./InterceptorRouteDependency";
+import { IController } from '@zcodeapp/interfaces'
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Patch,
+  Options,
+  Head,
+  BaseController
+} from '../../../src'
+import { InterceptorRouteDependency } from './InterceptorRouteDependency'
 
 @Controller()
-export class InterceptorRouteEmptyController extends BaseController implements IController {
-
-  @Get("/", {
+export class InterceptorRouteEmptyController
+  extends BaseController
+  implements IController
+{
+  @Get('/', {
     interceptors: [InterceptorRouteDependency]
   })
   public get() {}
 
-  @Post("/", {
+  @Post('/', {
     interceptors: [InterceptorRouteDependency]
   })
   public post() {}
 
-  @Put("/", {
+  @Put('/', {
     interceptors: [InterceptorRouteDependency]
   })
   public put() {}
 
-  @Delete("/", {
+  @Delete('/', {
     interceptors: [InterceptorRouteDependency]
   })
   public delete() {}
 
-  @Patch("/", {
+  @Patch('/', {
     interceptors: [InterceptorRouteDependency]
   })
   public patch() {}
 
-  @Options("/", {
+  @Options('/', {
     interceptors: [InterceptorRouteDependency]
   })
   public options() {}
 
-  @Head("/", {
+  @Head('/', {
     interceptors: [InterceptorRouteDependency]
   })
   public head() {}

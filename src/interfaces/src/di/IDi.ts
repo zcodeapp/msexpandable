@@ -1,15 +1,14 @@
-import { IDiConstructor, IDiGetOptions, IDiOptions, TConstructor } from "."
+import { IDiConstructor, IDiGetOptions, IDiOptions, TConstructor } from '.'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IDi {
-  
   /**
    * Method for update options of instance without new create
-   * 
+   *
    * @param _options Options for construct instance
    */
   updateOptions(_options: IDiConstructor): void
-  
+
   /**
    * Method for register a dependency
    *
@@ -20,7 +19,7 @@ export interface IDi {
 
   /**
    * Method for add providers for dependency
-   * 
+   *
    * @param key Identification dependency
    * @param providers List providers for dependency
    */

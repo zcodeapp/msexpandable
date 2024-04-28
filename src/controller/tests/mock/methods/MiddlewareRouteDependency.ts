@@ -1,5 +1,3 @@
-import { IControllerMiddleware } from "@zcodeapp/interfaces";
+import { IControllerMiddleware } from '@zcodeapp/interfaces'
 
-export class MiddlewareRouteDependency implements IControllerMiddleware {
-    
-}
+export class MiddlewareRouteDependency implements IControllerMiddleware {}

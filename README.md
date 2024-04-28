@@ -11,3 +11,53 @@
 | [@zcodeapp/cache](src/cache) | [![npm version](https://img.shields.io/npm/v/@zcodeapp/cache.svg)](https://www.npmjs.com/package/@zcodeapp/cache) | [![Cache CI](https://github.com/zcodeapp/msexpandable/actions/workflows/cache-workflow.yml/badge.svg?branch=main)](https://github.com/zcodeapp/msexpandable/actions/workflows/cache-workflow.yml) | [![codecov](https://codecov.io/gh/zcodeapp/msexpandable/branch/main/graph/badge.svg?token=ZHJHX9L0CN&flag=cache)](https://app.codecov.io/gh/zcodeapp/msexpandable/tree/main/src%2Fcache%2Fsrc) |
 | [@zcodeapp/controller](src/controller) | [![npm version](https://img.shields.io/npm/v/@zcodeapp/controller.svg)](https://www.npmjs.com/package/@zcodeapp/controller) | [![Controller CI](https://github.com/zcodeapp/msexpandable/actions/workflows/controller-workflow.yml/badge.svg?branch=main)](https://github.com/zcodeapp/msexpandable/actions/workflows/controller-workflow.yml) | [![codecov](https://codecov.io/gh/zcodeapp/msexpandable/branch/main/graph/badge.svg?token=ZHJHX9L0CN&flag=controller)](https://app.codecov.io/gh/zcodeapp/msexpandable/tree/main/src%2Fcontroller%2Fsrc) |
 | [@zcodeapp/validation](src/validation) | [![npm version](https://img.shields.io/npm/v/@zcodeapp/validation.svg)](https://www.npmjs.com/package/@zcodeapp/validation) | [![Validation CI](https://github.com/zcodeapp/msexpandable/actions/workflows/validation-workflow.yml/badge.svg?branch=main)](https://github.com/zcodeapp/msexpandable/actions/workflows/validation-workflow.yml) | [![codecov](https://codecov.io/gh/zcodeapp/msexpandable/branch/main/graph/badge.svg?token=ZHJHX9L0CN&flag=validation)](https://app.codecov.io/gh/zcodeapp/msexpandable/tree/main/src%2Fvalidation%2Fsrc) |
+
+
+
+# Development using Debian/Ubuntu
+
+## Host commands
+
+Build Docker Images and Install Application.
+
+```bash
+bin/docker/host/install
+```
+
+Nodejs Client
+
+```bash
+bin/docker/host/client
+```
+
+## Docker Container commands
+
+Build Application
+
+```bash
+bin/docker/client/build
+```
+
+Clean Application
+
+```bash
+bin/docker/client/clean
+```
+
+Install Application
+
+```bash
+bin/docker/client/install
+```
+
+Publish Application packages
+
+```bash
+bin/docker/client/publish
+```
+
+Test Application
+
+```bash
+bin/docker/client/test
+```

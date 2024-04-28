@@ -1,9 +1,11 @@
-import { Injectable } from "@zcodeapp/di";
-import { IConfigurationData, IConfigurationStrategy } from "@zcodeapp/interfaces";
+import { Injectable } from '@zcodeapp/di'
+import {
+  IConfigurationData,
+  IConfigurationStrategy
+} from '@zcodeapp/interfaces'
 
 @Injectable()
 export class EnvironmentStrategy implements IConfigurationStrategy {
-
   /**
    * Method for load env from system
    *
@@ -13,6 +15,6 @@ export class EnvironmentStrategy implements IConfigurationStrategy {
     return Object.entries(process.env).map(([key, value]) => ({
       key,
       value
-    }));
+    }))
   }
 }

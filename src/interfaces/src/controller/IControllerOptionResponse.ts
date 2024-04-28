@@ -1,7 +1,7 @@
-import { ERequestStatus } from "../http-request";
+import { ERequestStatus } from '../http-request'
 
 export interface IControllerOptionResponse {
-  status: ERequestStatus;
-  json?: string;
-  description?: string;
+  status: ERequestStatus
+  json?: string
+  description?: string
 }

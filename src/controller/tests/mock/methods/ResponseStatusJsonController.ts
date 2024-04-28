@@ -1,13 +1,13 @@
-import { ERequestStatus, IController } from "@zcodeapp/interfaces";
-import { BaseController, Controller } from "../../../src";
+import { ERequestStatus, IController } from '@zcodeapp/interfaces'
+import { BaseController, Controller } from '../../../src'
 
-@Controller("/", {
+@Controller('/', {
   responses: [
     {
-      status: ERequestStatus.BAD_REQUEST,
+      status: ERequestStatus.BAD_REQUEST
     }
   ]
 })
-export class ResponseStatusJsonController extends BaseController implements IController {
-
-}
+export class ResponseStatusJsonController
+  extends BaseController
+  implements IController {}

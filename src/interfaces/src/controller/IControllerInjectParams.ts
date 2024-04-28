@@ -1,8 +1,7 @@
-import { EControllerInjectParam } from "./EControllerInjectParam";
+import { EControllerInjectParam } from './EControllerInjectParam'
 
 export interface IControllerInjectParams {
-  index: number;
-  param: EControllerInjectParam;
-  value?: string;
+  index: number
+  param: EControllerInjectParam
+  value?: string
 }
-

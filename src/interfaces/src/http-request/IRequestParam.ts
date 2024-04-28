@@ -1,4 +1,4 @@
 export interface IRequestParam {
-  name: string;
-  value: string;
+  name: string
+  value: string
 }

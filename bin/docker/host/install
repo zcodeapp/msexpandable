@@ -3,6 +3,6 @@
 bin/docker/host/ostest
 bin/docker/host/docker-install
 bin/docker/host/docker-build
-bin/docker/host/docker-run bin/docker/client/clean
-bin/docker/host/docker-run bin/docker/client/install
-bin/docker/host/docker-run bin/docker/client/build
+bin/docker/host/client bin/docker/client/clean
+bin/docker/host/client bin/docker/client/install
+# bin/docker/host/client bin/docker/client/build

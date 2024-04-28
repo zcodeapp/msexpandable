@@ -1,5 +1,3 @@
-import { IControllerInterceptor } from "@zcodeapp/interfaces";
+import { IControllerInterceptor } from '@zcodeapp/interfaces'
 
-export class SampleInterceptor implements IControllerInterceptor {
-
-}
+export class SampleInterceptor implements IControllerInterceptor {}

@@ -1,10 +1,7 @@
+import { IController } from '@zcodeapp/interfaces'
+import { BaseController, Controller } from '../../../src'
 
-import { IController } from "@zcodeapp/interfaces";
-import { BaseController, Controller } from "../../../src"
-
-@Controller("/", {
-  summary: "Controller summary"
+@Controller('/', {
+  summary: 'Controller summary'
 })
-export class SummaryController extends BaseController implements IController {
-
-}
+export class SummaryController extends BaseController implements IController {}

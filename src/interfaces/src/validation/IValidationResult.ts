@@ -1,6 +1,6 @@
-import { IValidationError } from "./IValidationError";
+import { IValidationError } from './IValidationError'
 
 export interface IValidationResult {
-  errors: IValidationError[],
+  errors: IValidationError[]
   success: boolean
 }

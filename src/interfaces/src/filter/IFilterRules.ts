@@ -1,3 +1,1 @@
-export interface IFilterRules {
-  
-}
+export interface IFilterRules {}

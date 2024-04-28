@@ -1,3 +1,1 @@
-export interface IControllerMiddleware {
-    
-}
+export interface IControllerMiddleware {}

@@ -1,28 +1,27 @@
-import { Injectable } from "@zcodeapp/di";
-import { IsUuid } from "../../src"
+import { Injectable } from '@zcodeapp/di'
+import { IsUuid } from '../../src'
 
 @Injectable({ singleton: false })
 export class SampleDefaultValues {
-  
   @IsUuid()
-  public default: string;
-  
+  public default: string
+
   @IsUuid({
     generate: true
   })
-  public nonGenerate: string;
-  
+  public nonGenerate: string
+
   @IsUuid({
     generate: true,
     required: true
   })
-  public generate: string;
-  
+  public generate: string
+
   @IsUuid({
     generate: true
   })
-  public generateNonRequired: string;
-  
+  public generateNonRequired: string
+
   @IsUuid(true)
-  public generateBoolean: string;
+  public generateBoolean: string
 }

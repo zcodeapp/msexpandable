@@ -1,6 +1,5 @@
-import { IDiGetOptionsProviders } from "./IDiGetOptionsProviders";
+import { IDiGetOptionsProviders } from './IDiGetOptionsProviders'
 
 export interface IDiGetOptions {
-  providers?: IDiGetOptionsProviders[];
+  providers?: IDiGetOptionsProviders[]
 }
-

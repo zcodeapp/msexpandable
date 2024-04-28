@@ -1,3 +1,1 @@
-export interface IControllerResponseData {
-
-}
+export interface IControllerResponseData {}

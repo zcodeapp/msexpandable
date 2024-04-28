@@ -1,4 +1,4 @@
-import { IResponseData } from "../http-request";
+import { IResponseData } from '../http-request'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IController {

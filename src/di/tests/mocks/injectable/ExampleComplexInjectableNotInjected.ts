@@ -1,2 +1,1 @@
-export class ExampleComplexInjectableNotInjected {
-}
+export class ExampleComplexInjectableNotInjected {}

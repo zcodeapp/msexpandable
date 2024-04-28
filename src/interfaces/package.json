@@ -6,8 +6,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Interfaces only\"",
-    "build": "rm -rf dist && tsc && npm run eslint",
-    "eslint": "eslint --ext .ts ."
+    "build": "rm -rf dist && npm run format && tsc && npm run eslint",
+    "eslint": "eslint --ext .ts .",
+    "format": "prettier --write \"src/**/*.ts\""
   },
   "publishConfig": {
     "access": "public"
@@ -30,6 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "eslint": "^8.56.0",
+    "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   }
 }

@@ -1,12 +1,24 @@
-import { IController } from "@zcodeapp/interfaces";
-import { Controller, Get, Post, Put, Delete, Patch, Options, Head, BaseController } from "../../../src";
-import { InterceptorDependency } from "./InterceptorDependency";
+import { IController } from '@zcodeapp/interfaces'
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Patch,
+  Options,
+  Head,
+  BaseController
+} from '../../../src'
+import { InterceptorDependency } from './InterceptorDependency'
 
-@Controller("/", {
+@Controller('/', {
   interceptors: [InterceptorDependency]
 })
-export class InterceptorController extends BaseController implements IController {
-
+export class InterceptorController
+  extends BaseController
+  implements IController
+{
   @Get()
   public get() {}
 

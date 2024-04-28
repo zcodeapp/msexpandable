@@ -1,19 +1,18 @@
-import { Injectable } from "@zcodeapp/di";
-import { IsDate, IsNumber, IsString } from "../../src";
+import { Injectable } from '@zcodeapp/di'
+import { IsDate, IsNumber, IsString } from '../../src'
 
 @Injectable({ singleton: false })
 export class SampleDefaultData {
-
   @IsDate({
     generate: true
   })
-  public createdAt: Date;
-  
+  public createdAt: Date
+
   @IsString({
     required: true
   })
-  public name: string;
+  public name: string
 
   @IsNumber()
-  public access?: number;
+  public access?: number
 }

@@ -1,51 +1,58 @@
-import { EValidationTypes, IValidation, IValidationOptions, TConstructor } from "@zcodeapp/interfaces";
-import { Validation } from "../validation";
-import { Di } from "@zcodeapp/di";
+import {
+  EValidationTypes,
+  IValidation,
+  IValidationOptions,
+  TConstructor
+} from '@zcodeapp/interfaces'
+import { Validation } from '../validation'
+import { Di } from '@zcodeapp/di'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Function for validation decorator default
  *
  * @param options Validation Options
- * @returns 
+ * @returns
  */
 export function decoratorModel(type: EValidationTypes) {
-    return function(model?: TConstructor<any> | IValidationOptions, options?: IValidationOptions) {
-      options = {
-        ... options ?? {},
-        ... {
-          singleModel: true
-        }
-      };
+  return function (
+    model?: TConstructor<any> | IValidationOptions,
+    options?: IValidationOptions
+  ) {
+    options = {
+      ...(options ?? {}),
+      ...{
+        singleModel: true
+      }
+    }
 
-      if (model?.constructor && model?.constructor?.name != "Object") {
-        options = {
-          ... options,
-          ... {
-            model: model as any
-          }
-        };
-      } else {
-        if (model) {
-          options = {
-            ... options,
-            ... model
-          };
+    if (model?.constructor && model?.constructor?.name != 'Object') {
+      options = {
+        ...options,
+        ...{
+          model: model as any
         }
       }
-    
-      return function(constructor: any, propertyName: any) {
-        
+    } else {
+      if (model) {
         options = {
-          ... options,
-          constructor,
-          propertyName
-        };
-        
-        const di = Di.getInstance();
-        const validation = di.get<IValidation>(Validation);
-    
-        validation.register(type, options);
-      };
+          ...options,
+          ...model
+        }
+      }
+    }
+
+    return function (constructor: any, propertyName: any) {
+      options = {
+        ...options,
+        constructor,
+        propertyName
+      }
+
+      const di = Di.getInstance()
+      const validation = di.get<IValidation>(Validation)
+
+      validation.register(type, options)
     }
   }
+}
