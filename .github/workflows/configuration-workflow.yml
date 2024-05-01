@@ -40,8 +40,8 @@
           name: build-artifacts
           path: ./src/configuration
 
-    test:
-      name: Test
+    testunit:
+      name: Test Unit
       runs-on: ubuntu-latest
       needs: build
       container:
@@ -61,10 +61,10 @@
           path: ./src/configuration
       
       - name: Adjust permissions
-        run: chmod -R +r ./src/configuration
+        run: chmod -R a+r ./src/configuration
 
-      - name: Run Tests
-        run: npm run test-ci
+      - name: Run Unit Tests
+        run: npm run test-ci-unit
         working-directory: ./src/configuration
 
       - name: Upload Artifacts
