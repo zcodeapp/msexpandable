@@ -96,3 +96,4 @@ const value = await cache.get('myKey');
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+

@@ -12,90 +12,90 @@ on:
     paths:
       - 'src/cache/**'
 
-  jobs:
-    build:
-      name: Build
-      runs-on: ubuntu-latest
-      container:
-        image: node:18
-      steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-      - name: Remove package.json root
-        run: rm package.json package-lock.json
-        working-directory: ./
+    - name: Remove package.json root
+      run: rm package.json package-lock.json
+      working-directory: ./
 
-      - name: Install Dependencies
-        run: npm install
-        working-directory: ./src/cache
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./src/cache
 
-      - name: Run Build
-        run: npm run build
-        working-directory: ./src/cache
+    - name: Run Build
+      run: npm run build
+      working-directory: ./src/cache
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifacts
-          path: ./src/cache
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: ./src/cache
 
-    testunit:
-      name: Test Unit
-      runs-on: ubuntu-latest
-      needs: build
-      container:
-        image: node:18
-      steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+  testunit:
+    name: Test Unit
+    runs-on: ubuntu-latest
+    needs: build
+    container:
+      image: node:18
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-      - name: Remove package.json root
-        run: rm package.json package-lock.json
-        working-directory: ./
+    - name: Remove package.json root
+      run: rm package.json package-lock.json
+      working-directory: ./
 
-      - name: Reuse Built Files
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
-          path: ./src/cache
-      
-      - name: Adjust permissions
-        run: chmod -R 777 ./src/cache
+    - name: Reuse Built Files
+      uses: actions/download-artifact@v4
+      with:
+        name: build-artifacts
+        path: ./src/cache
+    
+    - name: Adjust permissions
+      run: chmod -R 777 ./src/cache
 
-      - name: Run Unit Tests
-        run: npm run test-ci-unit
-        working-directory: ./src/cache
+    - name: Run Unit Tests
+      run: npm run test-ci-unit
+      working-directory: ./src/cache
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-artifacts
-          path: ./src/cache
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-artifacts
+        path: ./src/cache
 
-    codecov:
-      name: Codecov
-      runs-on: ubuntu-latest
-      needs: testunit
-      container:
-        image: node:18
-      steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+  codecov:
+    name: Codecov
+    runs-on: ubuntu-latest
+    needs: testunit
+    container:
+      image: node:18
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-      - name: Reuse Built Files
-        uses: actions/download-artifact@v4
-        with:
-          name: test-artifacts
-          path: ./src/cache
+    - name: Reuse Built Files
+      uses: actions/download-artifact@v4
+      with:
+        name: test-artifacts
+        path: ./src/cache
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./src/cache/coverage/coverage-final.json
-          flags: cache
-          name: cache
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./src/cache/coverage/coverage-final.json
+        flags: cache
+        name: cache
           fail_ci_if_error: true
           verbose: true
 
