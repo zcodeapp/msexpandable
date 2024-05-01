@@ -61,7 +61,7 @@ jobs:
         path: ./src/configuration
 
     - name: Run Tests
-      run: npm config set unsafe-perm true && npm run test-ci
+      run: npm run test-ci
       working-directory: ./src/configuration
 
     - name: Upload Artifacts
