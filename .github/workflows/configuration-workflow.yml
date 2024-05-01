@@ -61,7 +61,7 @@
           path: ./src/configuration
       
       - name: Adjust permissions
-        run: chmod -R 777 ./src/configuration
+        run: chmod -R +r ./src/configuration
 
       - name: Run Tests
         run: npm run test-ci
@@ -83,12 +83,8 @@
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Remove package.json root
-        run: rm package.json package-lock.json
-        working-directory: ./
-
       - name: Reuse Built Files
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: test-artifacts
           path: ./src/configuration
