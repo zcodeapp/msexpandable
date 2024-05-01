@@ -1,37 +1,35 @@
-name: Interfaces CI
+  name: Interfaces CI
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'src/interfaces/**'
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'src/interfaces/**'
+  on:
+    push:
+      branches:
+        - main
+      paths:
+        - 'src/interfaces/**'
+    pull_request:
+      branches:
+        - main
+      paths:
+        - 'src/interfaces/**'
 
-jobs:
-  build-and-test:
-    name: Build and Test
-    runs-on: ubuntu-latest
-    container:
-      image: node:18
+  jobs:
+    build:
+      name: Build
+      runs-on: ubuntu-latest
+      container:
+        image: node:18
+      steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Remove package.json root
+        run: rm package.json package-lock.json
+        working-directory: ./
 
-    - name: Remove package.json root
-      run: rm package.json package-lock.json
-      working-directory: ./
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./src/configuration
 
-    - name: Install Dependencies
-      run: npm install
-      working-directory: ./src/interfaces
-
-    - name: Run Build
-      run: npm run build
-      working-directory: ./src/interfaces
-
+      - name: Run Build
+        run: npm run build
+        working-directory: ./src/configuration

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "npm run build && node --inspect=0.0.0.0:9229 -r ts-node/register /app/node_modules/jest/bin/jest.js --coverage --runInBand tests",
-    "test-ci": "npx jest --coverage --runInBand",
+    "test-ci-unit": "npx jest --coverage --runInBand",
     "build": "rm -rf dist && npm run format && tsc && npm run eslint",
     "eslint": "eslint --ext .ts .",
     "format": "prettier --write \"{src,tests}/**/*.ts\""
