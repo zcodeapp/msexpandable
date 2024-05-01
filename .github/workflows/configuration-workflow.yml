@@ -76,7 +76,7 @@
     codecov:
       name: Codecov
       runs-on: ubuntu-latest
-      needs: test
+      needs: testunit
       container:
         image: node:18
       steps:
