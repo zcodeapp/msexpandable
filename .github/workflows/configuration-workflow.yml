@@ -61,7 +61,7 @@
           path: ./src/configuration
       
       - name: Adjust permissions
-        run: chmod -R a+r ./src/configuration
+        run: chmod -R 777 ./src/configuration
 
       - name: Run Unit Tests
         run: npm run test-ci-unit
