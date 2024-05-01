@@ -1,102 +1,105 @@
-name: Configuration CI
+  name: Configuration CI
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'src/configuration/**'
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'src/configuration/**'
+  on:
+    push:
+      branches:
+        - main
+      paths:
+        - 'src/configuration/**'
+    pull_request:
+      branches:
+        - main
+      paths:
+        - 'src/configuration/**'
 
-jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    container:
-      image: node:18
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+  jobs:
+    build:
+      name: Build
+      runs-on: ubuntu-latest
+      container:
+        image: node:18
+      steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Remove package.json root
-      run: rm package.json package-lock.json
-      working-directory: ./
+      - name: Remove package.json root
+        run: rm package.json package-lock.json
+        working-directory: ./
 
-    - name: Install Dependencies
-      run: npm install
-      working-directory: ./src/configuration
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./src/configuration
 
-    - name: Run Build
-      run: npm run build
-      working-directory: ./src/configuration
+      - name: Run Build
+        run: npm run build
+        working-directory: ./src/configuration
 
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-artifacts
-        path: ./src/configuration
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: ./src/configuration
 
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    needs: build
-    container:
-      image: node:18
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+    test:
+      name: Test
+      runs-on: ubuntu-latest
+      needs: build
+      container:
+        image: node:18
+      steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Remove package.json root
-      run: rm package.json package-lock.json
-      working-directory: ./
+      - name: Remove package.json root
+        run: rm package.json package-lock.json
+        working-directory: ./
 
-    - name: Reuse Built Files
-      uses: actions/download-artifact@v4
-      with:
-        name: build-artifacts
-        path: ./src/configuration
+      - name: Reuse Built Files
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: ./src/configuration
+      
+      - name: Adjust permissions
+        run: chmod -R 777 ./src/configuration
 
-    - name: Run Tests
-      run: npm run test-ci
-      working-directory: ./src/configuration
+      - name: Run Tests
+        run: npm run test-ci
+        working-directory: ./src/configuration
 
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-artifacts
-        path: ./src/configuration
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts
+          path: ./src/configuration
 
-  codecov:
-    name: Codecov
-    runs-on: ubuntu-latest
-    needs: test
-    container:
-      image: node:18
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+    codecov:
+      name: Codecov
+      runs-on: ubuntu-latest
+      needs: test
+      container:
+        image: node:18
+      steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Remove package.json root
-      run: rm package.json package-lock.json
-      working-directory: ./
+      - name: Remove package.json root
+        run: rm package.json package-lock.json
+        working-directory: ./
 
-    - name: Reuse Built Files
-      uses: actions/download-artifact@v2
-      with:
-        name: test-artifacts
-        path: ./src/configuration
+      - name: Reuse Built Files
+        uses: actions/download-artifact@v2
+        with:
+          name: test-artifacts
+          path: ./src/configuration
 
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./src/configuration/coverage/coverage-final.json
-        flags: configuration
-        name: configuration
-        fail_ci_if_error: true
-        verbose: true
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./src/configuration/coverage/coverage-final.json
+          flags: configuration
+          name: configuration
+          fail_ci_if_error: true
+          verbose: true
 
