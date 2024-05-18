@@ -28,7 +28,6 @@
 
       - name: Install Dependencies
         run: npm install
-        working-directory: ./src/validation
 
       - name: Run Build
         run: npm run build
