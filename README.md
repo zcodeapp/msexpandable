@@ -16,6 +16,8 @@
 
 # Development using Debian/Ubuntu
 
+Needs Docker installed. For install see [Docker docs](https://docs.docker.com/engine/install/).
+
 ## Host commands
 
 Build Docker Images and Install Application.
