@@ -22,8 +22,13 @@
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Remove package.json root
+        run: rm package.json package-lock.json
+        working-directory: ./
+
       - name: Install Dependencies
-        run: npm install; npm run build;
+        run: npm install
+        working-directory: ./src/validation
 
       - name: Run Build
         run: npm run build

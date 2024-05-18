@@ -8,6 +8,7 @@ services:
     user: node
     volumes:
       - ~/.ssh:/home/node/.ssh
+      - ~/.gitconfig:/home/node/.gitconfig
       - ${PWD}:/app
     networks:
       - public
