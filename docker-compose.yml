@@ -9,6 +9,7 @@ services:
     volumes:
       - ~/.ssh:/home/node/.ssh
       - ~/.gitconfig:/home/node/.gitconfig
+      - ~/.gnupg:/home/node/.gnupg
       - ${PWD}:/app
     networks:
       - public
