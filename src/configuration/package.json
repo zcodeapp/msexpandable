@@ -1,6 +1,6 @@
 {
   "name": "@zcodeapp/configuration",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Configuration for load system variables",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -31,7 +31,7 @@
     "@types/jest": "^29.5.11",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
-    "@zcodeapp/interfaces": "^0.5.0",
+    "@zcodeapp/interfaces": "^0.5.1",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "prettier": "^3.2.5",
@@ -39,8 +39,8 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@zcodeapp/di": "^0.3.1",
-    "@zcodeapp/logger": "^0.2.7",
-    "@zcodeapp/utils": "^0.3.0"
+    "@zcodeapp/di": "^0.3.2",
+    "@zcodeapp/logger": "^0.2.8",
+    "@zcodeapp/utils": "^0.3.1"
   }
 }
