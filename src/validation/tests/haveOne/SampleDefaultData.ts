@@ -1,5 +1,5 @@
 import { Injectable } from '@zcodeapp/di'
-import { IsDate, IsNumber, IsString } from '../../src'
+import { HaveOne, IsDate, IsNumber, IsString } from '../../src'
 
 @Injectable({ singleton: false })
 export class SampleDefaultData {
@@ -15,4 +15,7 @@ export class SampleDefaultData {
 
   @IsNumber()
   public access?: number
+
+  @HaveOne()
+  public nonRequired: SampleDefaultData
 }

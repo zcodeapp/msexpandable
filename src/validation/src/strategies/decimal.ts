@@ -22,7 +22,7 @@ export class DecimalStrategy implements IValidationStrategy {
     )
       return result
 
-    if (rule?.decimal) {
+    if (rule.decimal) {
       const rawNumber = value.toString().split('.')
       if (rawNumber.length != 2 || rawNumber[1].length > rule.decimal)
         return result

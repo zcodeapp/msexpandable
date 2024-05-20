@@ -19,7 +19,7 @@ export function decoratorGenerate(type?: EValidationTypes) {
     options?: IValidationOptions
   ) {
     options = {
-      ...(options ?? {})
+      ...options
     }
 
     if (generate != undefined && typeof generate != 'boolean') {

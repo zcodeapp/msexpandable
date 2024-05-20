@@ -87,14 +87,14 @@ export class Validation implements IValidation {
    * @param constructor Contructor for test exists
    * @returns
    */
-  public exists(constructor: any): IValidationRules {
-    return this._rules.find(
-      (x) =>
-        x.constructor ==
-        (constructor.prototype.constructor?.name ??
-          constructor.constructor.name)
-    )
-  }
+  // public exists(constructor: any): IValidationRules {
+  //   return this._rules.find(
+  //     (x) =>
+  //       x.constructor ==
+  //       (constructor.prototype.constructor?.name ??
+  //         constructor.constructor.name)
+  //   )
+  // }
 
   /**
    * Method for validate class using decorators
@@ -118,74 +118,72 @@ export class Validation implements IValidation {
       constructor: constructor.constructor.name
     })
 
-    if (rules.length > 0) {
-      rules.forEach((rule) => {
-        let value = constructor[rule.propertyName]
+    rules.forEach((rule) => {
+      let value = constructor[rule.propertyName]
 
-        this._logger.debug('Value property', {
-          constructor,
-          value
-        })
-
-        if ((value == undefined || String(value) == '') && !rule.generate) {
-          if (rule.required) {
-            errors.push(
-              this._error(
-                rule,
-                rule.errors?.empty ??
-                  'Class have property required without value',
-                value
-              )
-            )
-          }
-        } else {
-          this._strategies.map((_strategy: any) => {
-            const strategy: IValidationMapTypes = {
-              type: _strategy[EValidationMap.TYPE],
-              callback: this._di.get<any>(_strategy[EValidationMap.STRATEGY])
-                .handle,
-              generate:
-                _strategy[EValidationMap.GENERATE] &&
-                this._di.get<any>(_strategy[EValidationMap.GENERATE])?.handle,
-              parse:
-                _strategy[EValidationMap.PARSE] &&
-                this._di.get<any>(_strategy[EValidationMap.PARSE])?.handle
-            }
-            if (strategy.type == rule.type) {
-              if (strategy.parse)
-                value = constructor[rule.propertyName] = strategy.parse(
-                  rule,
-                  value
-                )
-
-              if (strategy.generate && rule.generate)
-                value = constructor[rule.propertyName] = strategy.generate(
-                  rule,
-                  value
-                )
-
-              const resultCallback = strategy.callback(rule, value)
-
-              if (resultCallback.errors && resultCallback.errors.length > 0) {
-                resultCallback.errors.map((error) => errors.push(error))
-              } else {
-                if (!resultCallback.success) {
-                  errors.push(
-                    this._error(
-                      rule,
-                      rule.errors?.invalid ?? 'Class have invalid value',
-                      value
-                    )
-                  )
-                }
-              }
-            }
-          })
-        }
+      this._logger.debug('Value property', {
+        constructor,
+        value
       })
 
-      return { errors }
-    }
+      if ((value == undefined || String(value) == '') && !rule.generate) {
+        if (rule.required) {
+          errors.push(
+            this._error(
+              rule,
+              rule.errors?.empty ??
+                'Class have property required without value',
+              value
+            )
+          )
+        }
+      } else {
+        this._strategies.map((_strategy: any) => {
+          const strategy: IValidationMapTypes = {
+            type: _strategy[EValidationMap.TYPE],
+            callback: this._di.get<any>(_strategy[EValidationMap.STRATEGY])
+              .handle,
+            generate:
+              _strategy[EValidationMap.GENERATE] &&
+              this._di.get<any>(_strategy[EValidationMap.GENERATE]).handle,
+            parse:
+              _strategy[EValidationMap.PARSE] &&
+              this._di.get<any>(_strategy[EValidationMap.PARSE]).handle
+          }
+          if (strategy.type == rule.type) {
+            if (strategy.parse)
+              value = constructor[rule.propertyName] = strategy.parse(
+                rule,
+                value
+              )
+
+            if (strategy.generate && rule.generate)
+              value = constructor[rule.propertyName] = strategy.generate(
+                rule,
+                value
+              )
+
+            const resultCallback = strategy.callback(rule, value)
+
+            if (resultCallback.errors && resultCallback.errors.length > 0) {
+              resultCallback.errors.map((error) => errors.push(error))
+            } else {
+              if (!resultCallback.success) {
+                errors.push(
+                  this._error(
+                    rule,
+                    rule.errors?.invalid ?? 'Class have invalid value',
+                    value
+                  )
+                )
+              }
+            }
+          }
+        })
+      }
+    })
+
+    return { errors }
   }
 
   /**

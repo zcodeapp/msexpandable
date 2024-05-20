@@ -19,32 +19,29 @@ export function decoratorModel(type: EValidationTypes) {
     model?: TConstructor<any> | IValidationOptions,
     options?: IValidationOptions
   ) {
-    options = {
-      ...(options ?? {}),
-      ...{
-        singleModel: true
-      }
+    let _options = {
+      ...options
     }
 
-    if (model?.constructor && model?.constructor?.name != 'Object') {
-      options = {
-        ...options,
+    if (model?.constructor && model.constructor.name !== 'Object') {
+      _options = {
+        ..._options,
         ...{
           model: model as any
         }
       }
     } else {
       if (model) {
-        options = {
-          ...options,
+        _options = {
+          ..._options,
           ...model
         }
       }
     }
 
     return function (constructor: any, propertyName: any) {
-      options = {
-        ...options,
+      _options = {
+        ..._options,
         constructor,
         propertyName
       }
@@ -52,7 +49,7 @@ export function decoratorModel(type: EValidationTypes) {
       const di = Di.getInstance()
       const validation = di.get<IValidation>(Validation)
 
-      validation.register(type, options)
+      validation.register(type, _options)
     }
   }
 }
