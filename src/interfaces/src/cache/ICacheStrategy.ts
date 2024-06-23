@@ -1,5 +1,4 @@
 export interface ICacheStrategy {
-
   /**
    * Method for create/update cache
    *
