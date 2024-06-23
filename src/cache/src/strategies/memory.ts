@@ -5,14 +5,17 @@ import { ICacheStrategy, IMemoryData } from '@zcodeapp/interfaces'
 export class MemoryStrategy implements ICacheStrategy {
   /**
    * Local memory storage
+   *
+   * @var IMemoryData[]
    */
   private _memoryData: IMemoryData[] = []
 
   /**
    * Method for create/update cache
    *
-   * @param key Key of cache
-   * @param value Value of cache
+   * @param string Key of cache
+   * @param string value Value of cache
+   * @returns Promise<void>
    */
   public async set(key: string, value: string): Promise<void> {
     const index = this._memoryData.findIndex((x) => x.key == key)
@@ -29,8 +32,8 @@ export class MemoryStrategy implements ICacheStrategy {
   /**
    * Method for get value cache
    *
-   * @param key Key of cache
-   * @returns Cache value if exists
+   * @param string key Key of cache
+   * @returns Promise<string> Cache value if exists
    */
   public async get(key: string): Promise<string> {
     const data = this._memoryData.find((x) => x.key == key)

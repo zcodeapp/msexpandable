@@ -279,7 +279,7 @@ describe('Di Test', () => {
     })
     expect(() => {
       di.provider(ExampleSimpleCallback, [ExampleSimpleCallback])
-    }).toThrow(`Instance not found [${ExampleSimpleCallback}]`)
+    }).toThrow(`Instance not found [ExampleSimpleCallback]`)
   })
 
   it('Test register undefined value for string singleton', () => {
@@ -391,4 +391,35 @@ describe('Di Test', () => {
 
     expect(instance.getClass().getContent()).toBe('content')
   })
+
+  it('Test default value for singleton is false', () => {
+    const _di = Di.getInstance({
+      cleanSingleton: true
+    })
+
+    _di.register(ExampleSimpleCallback, {
+      providers: [() => Utils.Strings.RandomString()]
+    })
+
+    const callback1 = _di.get(ExampleSimpleCallback)
+    const callback2 = _di.get(ExampleSimpleCallback)
+
+    expect(callback1.getContent()).not.toBe(callback2.getContent())
+  })
+
+  // it('Test value for singleton is true', () => {
+  //   const _di = Di.getInstance({
+  //     cleanSingleton: true
+  //   })
+
+  //   _di.register(ExampleSimpleCallback, {
+  //     singleton: true,
+  //     providers: [() => Utils.Strings.RandomString()]
+  //   })
+
+  //   const callback1 = _di.get(ExampleSimpleCallback)
+  //   const callback2 = _di.get(ExampleSimpleCallback)
+
+  //   expect(callback1.getContent()).toBe(callback2.getContent())
+  // })
 })

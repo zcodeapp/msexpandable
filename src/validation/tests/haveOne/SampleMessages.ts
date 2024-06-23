@@ -12,4 +12,13 @@ export class SampleMessages {
     }
   })
   public default: SampleDefaultData
+
+  @HaveOne({
+    required: false,
+    errors: {
+      empty: 'Empty message non-required',
+      invalid: 'Invalid message non-required'
+    }
+  })
+  public NonRequired: SampleDefaultData
 }

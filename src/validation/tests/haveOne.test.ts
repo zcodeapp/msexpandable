@@ -194,5 +194,21 @@ describe('Test HaveOne decorator', () => {
         }
       ])
     })
+
+    it('Test invalid non-required message', () => {
+      const sampleMessages = di.get(SampleMessages)
+      const sampleDefaultData = di.get(SampleDefaultData)
+      sampleDefaultData.name = 'Name test'
+      sampleMessages.default = sampleDefaultData
+      sampleMessages.NonRequired = 'string content' as any
+      expect(validation.check(sampleMessages).errors).toStrictEqual([
+        {
+          constructor: 'SampleMessages',
+          message: 'Invalid message non-required',
+          propertyName: 'NonRequired',
+          value: 'string content'
+        }
+      ])
+    })
   })
 })

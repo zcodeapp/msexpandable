@@ -8,6 +8,8 @@ import { Utils } from '@zcodeapp/utils'
 export class Cache implements ICache {
   /**
    * Cache strategy
+   *
+   * @var ICacheStrategy
    */
   private _cacheStrategy: ICacheStrategy
 

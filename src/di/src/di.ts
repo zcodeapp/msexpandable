@@ -100,7 +100,7 @@ export class Di implements IDi {
       const payload = {
         key,
         unique,
-        singleton: options?.singleton ?? true,
+        singleton: options?.singleton ?? false,
         instance: null,
         value: options?.value ?? undefined,
         providers: options?.providers ?? [],
@@ -203,7 +203,11 @@ export class Di implements IDi {
     this._logger.debug('Success find instance', { instance, index })
 
     if (index < 0 || !instance) {
-      throw new Error(`Instance not found [${key.toString()}]`)
+      let instanceName = key.toString()
+      const matchClassname = instanceName.match(/class\s+([a-zA-Z0-9_]+)/)
+      if (matchClassname && matchClassname.length >= 1)
+        instanceName = matchClassname[1]
+      throw new Error(`Instance not found [${instanceName}]`)
     }
 
     return instance
@@ -352,7 +356,7 @@ export class Di implements IDi {
           return (
             x.class.name == provider.constructor.name ||
             x.class.name == provider.name ||
-            x.class.name == provider.class?.name
+            (provider.class && x.class.name == provider.class.name)
           )
         })
 

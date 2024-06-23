@@ -11,7 +11,9 @@ import {
 } from '@zcodeapp/interfaces'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-@Injectable()
+@Injectable({
+  singleton: true
+})
 export class ControllerManager implements IControllerManager {
   private _controllers: IControllerConfiguration[] = []
   private _routes: IControllerRoute[] = []
